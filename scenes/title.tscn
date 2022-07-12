@@ -1,0 +1,296 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://gfx/ui/start_button_press.png" type="Texture" id=2]
+[ext_resource path="res://gfx/ui/start_button.png" type="Texture" id=3]
+[ext_resource path="res://scripts/title_screen.gd" type="Script" id=4]
+[ext_resource path="res://gfx/models/characters/bad_man.glb" type="PackedScene" id=5]
+[ext_resource path="res://gfx/models/characters/ray.glb" type="PackedScene" id=6]
+[ext_resource path="res://gfx/models/characters/dilan.glb" type="PackedScene" id=7]
+[ext_resource path="res://gfx/models/characters/mouth_open.tres" type="Material" id=8]
+[ext_resource path="res://scripts/spinner.gd" type="Script" id=9]
+[ext_resource path="res://gfx/fonts/stencil_28.tres" type="DynamicFont" id=10]
+[ext_resource path="res://gfx/fonts/arial.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://scripts/bobber.gd" type="Script" id=12]
+[ext_resource path="res://scripts/play_anim.gd" type="Script" id=13]
+
+[sub_resource type="Animation" id=3]
+resource_name = "idle-loop"
+length = 0.5
+loop = true
+tracks/0/type = "transform"
+tracks/0/path = NodePath("badman_rig/Skeleton:kneetarg.l")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray( 0, 1, 0, 0, 0, 4.65661e-10, 4.68352e-10, 6.65187e-11, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 4.65661e-10, 4.68352e-10, 6.65187e-11, 1, 1, 1, 1 )
+tracks/1/type = "transform"
+tracks/1/path = NodePath("badman_rig/Skeleton:kneetarg.r")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = PoolRealArray( 0, 1, 0, 0, 0, -4.65661e-10, -4.64856e-10, 1.19429e-10, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, -4.65661e-10, -4.64856e-10, 1.19429e-10, 1, 1, 1, 1 )
+tracks/2/type = "transform"
+tracks/2/path = NodePath("badman_rig/Skeleton:foot.l")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = PoolRealArray( 0, 1, 0, 0, 0, -6.63849e-19, -2.32831e-10, 1.4258e-09, 1, 1, 1, 1, 0.0166667, 1, 0, 0, 0, -6.63849e-19, -2.32831e-10, 1.4258e-09, 1, 1, 1, 1, 0.0333333, 1, 0, 0, 0, 4.20576e-06, 2.42885e-05, -0.00205008, 0.999998, 1, 1, 1, 0.05, 1, 0, 0, 0, 1.59882e-05, 9.23323e-05, -0.00779315, 0.99997, 1, 1, 1, 0.0666667, 1, 0, 0, 0, 3.40977e-05, 0.000196915, -0.0166205, 0.999862, 1, 1, 1, 0.216667, 1, 0, 0, 0, 0.000272642, 0.00157451, -0.132895, 0.991129, 1, 1, 1, 0.233333, 1, 0, 0, 0, 0.000284315, 0.00164192, -0.138585, 0.990349, 1, 1, 1, 0.25, 1, 0, 0, 0, 0.00028848, 0.00166598, -0.140615, 0.990063, 1, 1, 1, 0.266667, 1, 0, 0, 0, 0.000284841, 0.00164496, -0.138841, 0.990313, 1, 1, 1, 0.283333, 1, 0, 0, 0, 0.000274589, 0.00158575, -0.133844, 0.991001, 1, 1, 1, 0.3, 1, 0, 0, 0, 0.000258718, 0.0014941, -0.126108, 0.992015, 1, 1, 1, 0.466667, 1, 0, 0, 0, 1.40242e-05, 8.09909e-05, -0.00683594, 0.999977, 1, 1, 1, 0.483333, 1, 0, 0, 0, 3.67576e-06, 2.12285e-05, -0.00179174, 0.999998, 1, 1, 1, 0.5, 1, 0, 0, 0, -6.63849e-19, -2.32831e-10, 1.4258e-09, 1, 1, 1, 1 )
+tracks/3/type = "transform"
+tracks/3/path = NodePath("badman_rig/Skeleton:calf.l")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = PoolRealArray( 0, 1, 0, 0, 0, -9.31323e-10, 5.18124e-27, -4.66684e-11, 1, 1, 1, 1, 0.0166667, 1, 0, 0, 0, -9.31323e-10, 5.18124e-27, -4.66684e-11, 1, 1, 1, 1, 0.1, 1, 0, 0, 0, -0.000576641, 2.31653e-06, 0.178, 0.98403, 1, 1, 1, 0.183333, 1, 0, 0, 0, -0.0016079, 1.32541e-05, 0.294267, 0.955722, 1, 1, 1, 0.2, 1, 0, 0, 0, -0.00177265, 1.58778e-05, 0.308385, 0.95126, 1, 1, 1, 0.216667, 1, 0, 0, 0, -0.00190203, 1.81112e-05, 0.318955, 0.947768, 1, 1, 1, 0.233333, 1, 0, 0, 0, -0.00198656, 1.96505e-05, 0.325639, 0.945492, 1, 1, 1, 0.25, 1, 0, 0, 0, -0.0020168, 2.02175e-05, 0.327989, 0.944679, 1, 1, 1, 0.266667, 1, 0, 0, 0, -0.00199037, 1.97206e-05, 0.325936, 0.94539, 1, 1, 1, 0.283333, 1, 0, 0, 0, -0.0019161, 1.83636e-05, 0.320079, 0.947389, 1, 1, 1, 0.3, 1, 0, 0, 0, -0.00180166, 1.6366e-05, 0.310793, 0.950476, 1, 1, 1, 0.316667, 1, 0, 0, 0, -0.00165475, 1.39755e-05, 0.298363, 0.954451, 1, 1, 1, 0.433333, 1, 0, 0, 0, -0.000345468, 1.07673e-06, 0.137858, 0.990452, 1, 1, 1, 0.5, 1, 0, 0, 0, -9.31323e-10, 5.18124e-27, -4.66684e-11, 1, 1, 1, 1 )
+tracks/4/type = "transform"
+tracks/4/path = NodePath("badman_rig/Skeleton:thigh.l")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = PoolRealArray( 0, 1, 0, 0, 0, 9.31322e-10, 0, 0, 1, 1, 1, 1, 0.0166667, 1, 0, 0, 0, 9.31322e-10, 0, 0, 1, 1, 1, 1, 0.216667, 1, 0, 0, 0, 0.000177238, -3.76587e-05, -0.179734, 0.983715, 1, 1, 1, 0.233333, 1, 0, 0, 0, 0.000185488, -3.86469e-05, -0.183621, 0.982997, 1, 1, 1, 0.25, 1, 0, 0, 0, 0.000188449, -3.89899e-05, -0.18499, 0.98274, 1, 1, 1, 0.266667, 1, 0, 0, 0, 0.000185863, -3.86903e-05, -0.183794, 0.982965, 1, 1, 1, 0.283333, 1, 0, 0, 0, 0.000178611, -3.78269e-05, -0.180387, 0.983596, 1, 1, 1, 0.3, 1, 0, 0, 0, 0.000167465, -3.64266e-05, -0.174996, 0.984569, 1, 1, 1, 0.316667, 1, 0, 0, 0, 0.000153236, -3.45047e-05, -0.167801, 0.985821, 1, 1, 1, 0.5, 1, 0, 0, 0, 9.31322e-10, 0, 0, 1, 1, 1, 1 )
+tracks/5/type = "transform"
+tracks/5/path = NodePath("badman_rig/Skeleton:claw.l.l")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 8.42504e-30, -1.52179e-09, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 0, 8.42504e-30, -1.52179e-09, 1, 1, 1, 1 )
+tracks/6/type = "transform"
+tracks/6/path = NodePath("badman_rig/Skeleton:claw.r.l")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, -1.52129e-09, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 0, 0, -1.52129e-09, 1, 1, 1, 1 )
+tracks/7/type = "transform"
+tracks/7/path = NodePath("badman_rig/Skeleton:hand.l")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = PoolRealArray( 0, 1, 0, 0, 0, 1.43549e-20, 7.27596e-12, 3.66072e-11, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 1.43549e-20, 7.27596e-12, 3.66072e-11, 1, 1, 1, 1 )
+tracks/8/type = "transform"
+tracks/8/path = NodePath("badman_rig/Skeleton:forearm.l")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, 3.27418e-11, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 0, 0, 3.27418e-11, 1, 1, 1, 1 )
+tracks/9/type = "transform"
+tracks/9/path = NodePath("badman_rig/Skeleton:arm.l")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = PoolRealArray( 0, 1, 0, 0, 0, -5.52203e-30, 7.10543e-15, -4.44089e-16, 1, 1, 1, 1, 0.0166667, 1, 0, 0, 0, -5.52203e-30, 7.10543e-15, -4.44089e-16, 1, 1, 1, 1, 0.0333333, 1, -4.26326e-14, 0.0016886, 1.65701e-05, -9.46633e-30, 1.42109e-14, 3.21965e-15, 1, 1, 1, 1, 0.05, 1, -1.42109e-14, 0.0064168, 6.24657e-05, -9.46633e-30, 1.42109e-14, -3.33067e-16, 1, 1, 1, 1, 0.0666667, 1, -1.42109e-14, 0.0136776, 0.000133038, 0, 0, 1.33227e-15, 1, 1, 1, 1, 0.216667, 1, -4.26326e-14, 0.109419, 0.00106406, 4.65661e-10, 7.10543e-15, -4.44089e-16, 1, 1, 1, 1, 0.233333, 1, -1.42109e-14, 0.114148, 0.00111032, -5.52203e-30, 7.10543e-15, 3.10862e-15, 1, 1, 1, 1, 0.25, 1, 6.01145e-09, 0.115836, 0.00112653, -9.46633e-30, 1.42109e-14, 3.21965e-15, 1, 1, 1, 1, 0.266667, 1, 6.01145e-09, 0.11436, 0.00111234, -9.46633e-30, 1.42109e-14, 3.21965e-15, 1, 1, 1, 1, 0.283333, 1, 6.01145e-09, 0.110208, 0.00107193, -5.52203e-30, 7.10543e-15, -4.44089e-16, 1, 1, 1, 1, 0.3, 1, 6.01143e-09, 0.103789, 0.00100946, -5.52203e-30, 7.10543e-15, -2.22045e-15, 1, 1, 1, 1, 0.466667, 1, 6.01148e-09, 0.00562906, 5.48363e-05, -9.46633e-30, 1.42109e-14, 3.21965e-15, 1, 1, 1, 1, 0.483333, 1, 6.01148e-09, 0.00147593, 1.45435e-05, -5.52203e-30, 7.10543e-15, -4.44089e-16, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, -5.52203e-30, 7.10543e-15, -4.44089e-16, 1, 1, 1, 1 )
+tracks/10/type = "transform"
+tracks/10/path = NodePath("badman_rig/Skeleton:hand.r")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = PoolRealArray( 0, 1, 0, 0, 0, 5.82077e-11, 1.81899e-12, -9.91314e-11, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 5.82077e-11, 1.81899e-12, -9.91314e-11, 1, 1, 1, 1 )
+tracks/11/type = "transform"
+tracks/11/path = NodePath("badman_rig/Skeleton:forearm.r")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = PoolRealArray( 0, 1, 0, 0, 0, -4.65661e-10, -3.49246e-10, 1.10049e-10, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, -4.65661e-10, -3.49246e-10, 1.10049e-10, 1, 1, 1, 1 )
+tracks/12/type = "transform"
+tracks/12/path = NodePath("badman_rig/Skeleton:arm.r")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = PoolRealArray( 0, 1, 0, 0, 0, -2.32831e-10, 7.10543e-15, -3.83027e-15, 1, 1, 1, 1, 0.0166667, 1, 0, 0, 0, -2.32831e-10, 7.10543e-15, -3.83027e-15, 1, 1, 1, 1, 0.0333333, 1, -2.84217e-14, 0.00168848, 6.19888e-06, -2.32831e-10, 1.42109e-14, -2.02616e-15, 1, 1, 1, 1, 0.05, 1, -2.84217e-14, 0.00641716, 2.30074e-05, -2.32831e-10, 7.10543e-15, -2.05391e-15, 1, 1, 1, 1, 0.0666667, 1, -2.84217e-14, 0.0136786, 4.92334e-05, -4.65661e-10, 1.42109e-14, -3.80251e-15, 1, 1, 1, 1, 0.216667, 1, -2.84217e-14, 0.109424, 0.000393033, 1.69605e-29, 7.10543e-15, -3.83027e-15, 1, 1, 1, 1, 0.233333, 1, 0, 0.114152, 0.00041008, -2.32831e-10, 7.10543e-15, -3.83027e-15, 1, 1, 1, 1, 0.25, 1, 6.01599e-09, 0.115841, 0.00041616, -2.32831e-10, 7.10543e-15, -3.83027e-15, 1, 1, 1, 1, 0.266667, 1, 6.01597e-09, 0.114365, 0.000410795, -2.32831e-10, 7.10543e-15, -3.83027e-15, 1, 1, 1, 1, 0.283333, 1, 6.01597e-09, 0.110212, 0.000395894, -2.32831e-10, 1.42109e-14, -2.02616e-15, 1, 1, 1, 1, 0.3, 1, 6.01594e-09, 0.103794, 0.000373006, -2.32831e-10, 7.10543e-15, -3.83027e-15, 1, 1, 1, 1, 0.466667, 1, 6.01599e-09, 0.00562942, 2.02656e-05, -2.32831e-10, 7.10543e-15, -3.83027e-15, 1, 1, 1, 1, 0.483333, 1, 6.01594e-09, 0.00147581, 5.36442e-06, -2.32831e-10, 1.42109e-14, -2.02616e-15, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, -2.32831e-10, 7.10543e-15, -3.83027e-15, 1, 1, 1, 1 )
+tracks/13/type = "transform"
+tracks/13/path = NodePath("badman_rig/Skeleton:head")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = PoolRealArray( 0, 1, 0, 0, 0, 2.32831e-10, -7.62197e-20, -3.27361e-10, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 2.32831e-10, -7.62197e-20, -3.27361e-10, 1, 1, 1, 1 )
+tracks/14/type = "transform"
+tracks/14/path = NodePath("badman_rig/Skeleton:neck")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = PoolRealArray( 0, 1, 0, 0, 0, 2.32831e-10, 0, 0, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 2.32831e-10, 0, 0, 1, 1, 1, 1 )
+tracks/15/type = "transform"
+tracks/15/path = NodePath("badman_rig/Skeleton:spine")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, 1.38778e-17, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 0, 0, 1.38778e-17, 1, 1, 1, 1 )
+tracks/16/type = "transform"
+tracks/16/path = NodePath("badman_rig/Skeleton:foot.r")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = PoolRealArray( 0, 1, 0, 0, 0, 1.16415e-10, -1.16415e-10, -9.01212e-08, 1, 1, 1, 1, 0.0166667, 1, 0, 0, 0, 1.16415e-10, -1.16415e-10, -9.01212e-08, 1, 1, 1, 1, 0.0333333, 1, 0, 0, 0, 7.52557e-06, -1.53183e-06, -0.00205031, 0.999998, 1, 1, 1, 0.05, 1, 0, 0, 0, 2.86074e-05, -5.82181e-06, -0.00779372, 0.99997, 1, 1, 1, 0.0666667, 1, 0, 0, 0, 6.10107e-05, -1.24161e-05, -0.0166215, 0.999862, 1, 1, 1, 0.216667, 1, 0, 0, 0, 0.000487836, -9.92769e-05, -0.132904, 0.991129, 1, 1, 1, 0.233333, 1, 0, 0, 0, 0.000508724, -0.000103528, -0.138594, 0.990349, 1, 1, 1, 0.25, 1, 0, 0, 0, 0.000516176, -0.000105044, -0.140625, 0.990063, 1, 1, 1, 0.266667, 1, 0, 0, 0, 0.000509663, -0.000103719, -0.13885, 0.990313, 1, 1, 1, 0.283333, 1, 0, 0, 0, 0.000491319, -9.99859e-05, -0.133853, 0.991001, 1, 1, 1, 0.3, 1, 0, 0, 0, 0.000462922, -9.42069e-05, -0.126116, 0.992015, 1, 1, 1, 0.466667, 1, 0, 0, 0, 2.5094e-05, -5.10691e-06, -0.00683642, 0.999977, 1, 1, 1, 0.483333, 1, 0, 0, 0, 6.57682e-06, -1.33866e-06, -0.00179194, 0.999998, 1, 1, 1, 0.5, 1, 0, 0, 0, 1.16415e-10, -1.16415e-10, -9.01212e-08, 1, 1, 1, 1 )
+tracks/17/type = "transform"
+tracks/17/path = NodePath("badman_rig/Skeleton:calf.r")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = PoolRealArray( 0, 1, 0, 0, 0, -9.31323e-10, 2.18279e-11, 5.28757e-10, 1, 1, 1, 1, 0.0166667, 1, 0, 0, 0, -9.31323e-10, 2.18279e-11, 5.28757e-10, 1, 1, 1, 1, 0.1, 1, 0, 0, 0, 0.000419443, -2.57436e-06, 0.17477, 0.984609, 1, 1, 1, 0.183333, 1, 0, 0, 0, 0.00116787, -1.20915e-05, 0.291137, 0.956681, 1, 1, 1, 0.2, 1, 0, 0, 0, 0.00128727, -1.4264e-05, 0.305257, 0.952269, 1, 1, 1, 0.216667, 1, 0, 0, 0, 0.00138102, -1.6106e-05, 0.315825, 0.948817, 1, 1, 1, 0.233333, 1, 0, 0, 0, 0.00144225, -1.7374e-05, 0.322505, 0.946567, 1, 1, 1, 0.25, 1, 0, 0, 0, 0.00146416, -1.78407e-05, 0.324855, 0.945763, 1, 1, 1, 0.266667, 1, 0, 0, 0, 0.00144501, -1.74327e-05, 0.322802, 0.946465, 1, 1, 1, 0.283333, 1, 0, 0, 0, 0.00139121, -1.6313e-05, 0.316948, 0.948442, 1, 1, 1, 0.3, 1, 0, 0, 0, 0.0013083, -1.4667e-05, 0.307664, 0.951494, 1, 1, 1, 0.316667, 1, 0, 0, 0, 0.00120183, -1.26901e-05, 0.295233, 0.955424, 1, 1, 1, 0.433333, 1, 0, 0, 0, 0.000251448, -1.319e-06, 0.13458, 0.990903, 1, 1, 1, 0.5, 1, 0, 0, 0, -9.31323e-10, 2.18279e-11, 5.28757e-10, 1, 1, 1, 1 )
+tracks/18/type = "transform"
+tracks/18/path = NodePath("badman_rig/Skeleton:thigh.r")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = PoolRealArray( 0, 1, 0, 0, 0, 1.39698e-09, 3.65918e-19, 1.30967e-10, 1, 1, 1, 1, 0.0166667, 1, 0, 0, 0, 4.65661e-10, 4.65661e-10, -1.09139e-10, 1, 1, 1, 1, 0.216667, 1, 0, 0, 0, -0.000178044, 3.76779e-05, -0.177933, 0.984043, 1, 1, 1, 0.233333, 1, 0, 0, 0, -0.000186334, 3.86649e-05, -0.18182, 0.983332, 1, 1, 1, 0.25, 1, 0, 0, 0, -0.000189304, 3.90055e-05, -0.183189, 0.983078, 1, 1, 1, 0.266667, 1, 0, 0, 0, -0.000186708, 3.87082e-05, -0.181993, 0.9833, 1, 1, 1, 0.283333, 1, 0, 0, 0, -0.000179424, 3.78464e-05, -0.178586, 0.983924, 1, 1, 1, 0.3, 1, 0, 0, 0, -0.000168233, 3.64498e-05, -0.173195, 0.984888, 1, 1, 1, 0.316667, 1, 0, 0, 0, -0.000153935, 3.45302e-05, -0.166, 0.986126, 1, 1, 1, 0.5, 1, 0, 0, 0, 1.39698e-09, 3.65918e-19, 1.30967e-10, 1, 1, 1, 1 )
+tracks/19/type = "transform"
+tracks/19/path = NodePath("badman_rig/Skeleton:pelvis")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.0166667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.0333333, 1, 0, -0.00223637, 0, 0, 0, 0, 1, 1, 1, 1, 0.05, 1, 0, -0.00849843, 0, 0, 0, 0, 1, 1, 1, 1, 0.0666667, 1, 0, -0.018115, 0, 0, 0, 0, 1, 1, 1, 1, 0.216667, 1, 0, -0.14492, 0, 0, 0, 0, 1, 1, 1, 1, 0.233333, 1, 0, -0.151182, 0, 0, 0, 0, 1, 1, 1, 1, 0.25, 1, 0, -0.153419, 0, 0, 0, 0, 1, 1, 1, 1, 0.266667, 1, 0, -0.151464, 0, 0, 0, 0, 1, 1, 1, 1, 0.283333, 1, 0, -0.145963, 0, 0, 0, 0, 1, 1, 1, 1, 0.3, 1, 0, -0.137463, 0, 0, 0, 0, 1, 1, 1, 1, 0.466667, 1, 0, -0.00745487, 0, 0, 0, 0, 1, 1, 1, 1, 0.483333, 1, 0, -0.00195456, 0, 0, 0, 0, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 )
+tracks/20/type = "transform"
+tracks/20/path = NodePath("badman_rig/Skeleton:root")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 7.10543e-15, 0, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 0, 7.10543e-15, 0, 1, 1, 1, 1 )
+tracks/21/type = "transform"
+tracks/21/path = NodePath("badman_rig/Skeleton:foothandle.l")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 )
+
+[sub_resource type="Environment" id=2]
+background_mode = 1
+background_color = Color( 0.0784314, 0.180392, 0.192157, 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 0.14
+
+[sub_resource type="DynamicFont" id=8]
+size = 28
+font_data = ExtResource( 11 )
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="TextMesh" id=10]
+material = SubResource( 9 )
+text = "The Ċ̀ronikles"
+font = SubResource( 8 )
+pixel_size = 0.02
+depth = 0.505
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.607843, 0.607843, 0.607843, 1 )
+
+[sub_resource type="TextMesh" id=6]
+material = SubResource( 5 )
+text = "Curse of the"
+font = ExtResource( 10 )
+pixel_size = 0.02
+depth = 3.44
+
+[sub_resource type="TextMesh" id=7]
+material = SubResource( 5 )
+text = "Crappy Killer Contraptions"
+font = ExtResource( 10 )
+pixel_size = 0.02
+depth = 3.44
+
+[node name="Title Screen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1024, 600 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="bad_man" parent="ViewportContainer/Viewport" instance=ExtResource( 5 )]
+transform = Transform( 0.34641, -0.0357639, -0.196776, 0, 0.393553, -0.0715278, 0.2, 0.0619448, 0.340827, 3, 3.51564, -3 )
+
+[node name="bad_man2" parent="ViewportContainer/Viewport" instance=ExtResource( 5 )]
+transform = Transform( -0.217307, -0.043939, -0.332937, 0.00576796, -0.396991, 0.0486278, -0.335774, 0.021617, 0.216306, 5.97483, 6.04652, -2.25616 )
+script = ExtResource( 9 )
+axis = 1
+
+[node name="bad_man3" parent="ViewportContainer/Viewport" instance=ExtResource( 5 )]
+transform = Transform( 0.238232, -0.0333242, -0.319585, -0.0199917, 0.395535, -0.0561464, 0.320696, 0.0494124, 0.233908, 8.59719, 1.76207, -1.2031 )
+
+[node name="AnimationPlayer" parent="ViewportContainer/Viewport/bad_man3" index="1"]
+anims/idle-loop = SubResource( 3 )
+
+[node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
+transform = Transform( 1, -0.000957165, -3.72831e-05, 0.000957116, 0.999999, -0.00128871, 3.85166e-05, 0.00128867, 0.999999, 0, 0, 7.97785 )
+current = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="ViewportContainer/Viewport"]
+environment = SubResource( 2 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, 0.541165, 0.840916, 0, -0.840916, 0.541165, 0, 0, 0 )
+
+[node name="dilan" parent="ViewportContainer/Viewport" instance=ExtResource( 7 )]
+transform = Transform( -0.138013, 0, 0.68626, 0, 0.7, 0, -0.68626, 0, -0.138013, -8.65597, 1.24273, -0.976585 )
+script = ExtResource( 13 )
+animation = "walk-loop"
+
+[node name="ray" parent="ViewportContainer/Viewport" instance=ExtResource( 6 )]
+transform = Transform( 0.26321, 0, 0.64863, 0, 0.7, 0, -0.64863, 0, 0.26321, -5.9138, 0.98243, -2.57407 )
+script = ExtResource( 13 )
+animation = "point"
+
+[node name="ray" parent="ViewportContainer/Viewport/ray/ray_rig/Skeleton" index="0"]
+material/2 = ExtResource( 8 )
+
+[node name="AnimationPlayer" parent="ViewportContainer/Viewport/ray" index="1"]
+reset_on_save = false
+
+[node name="The Cronikles" type="MeshInstance" parent="ViewportContainer/Viewport"]
+transform = Transform( 0.928118, -0.27401, 0.252025, 0.292383, 0.955552, -0.0378357, -0.230456, 0.108804, 0.966981, -3.71111, 1.69498, 0.0597541 )
+mesh = SubResource( 10 )
+
+[node name="CurseOfThe" type="MeshInstance" parent="ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, 0.99358, -0.113134, 0, 0.113134, 0.99358, 0, 1.1702, 0 )
+mesh = SubResource( 6 )
+script = ExtResource( 12 )
+bob_axes = Vector3( 0, 0, 1 )
+
+[node name="CrappyKillerContraptions" type="MeshInstance" parent="ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, 0.999931, -0.0117458, 0, 0.0117458, 0.999931, 0, 0.0844434, 0 )
+mesh = SubResource( 7 )
+script = ExtResource( 12 )
+bob_offset = 0.5
+
+[node name="StartButton" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -410.5
+margin_top = -240.0
+margin_right = 410.5
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 2 )
+expand = true
+
+[editable path="ViewportContainer/Viewport/bad_man3"]
+[editable path="ViewportContainer/Viewport/ray"]
