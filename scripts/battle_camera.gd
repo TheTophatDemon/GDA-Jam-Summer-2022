@@ -8,8 +8,7 @@ var offset:Vector3 = Vector3(0.0, 28.0, 14.0)
 var target_pos:Vector3
 
 func _ready():
-	get_node(actors_path).connect("activate_player", self, "set_target")
-	get_node(actors_path).connect("activate_enemy", self, "set_target")
+	var _err = get_node(actors_path).connect("turn_switch", self, "set_target")
 
 func set_target(node:Spatial):
 	target_path = get_path_to(node)
