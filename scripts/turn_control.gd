@@ -1,15 +1,17 @@
 extends Node
+class_name TurnControl
 
 signal activate_player(player)
 signal activate_enemy(enemy)
 signal turn_switch(actor)
 
-onready var players = $Players
-onready var enemies = $Enemies
+onready var players = get_node("%AlivePlayers")
+onready var enemies = get_node("%AliveEnemies")
 onready var turn_timer_ui = $TurnTimer
 onready var player_ui = $PlayerUI
 onready var countdown_label = $TurnTimer/Countdown
 onready var countdown_timer = $TurnTimer/Countdown/Timer
+onready var navmesh:NavigationMeshInstance = get_node("../NavMesh")
 
 var enemy_turn = false
 var turn_timer = 0.0
@@ -18,13 +20,15 @@ var turn_started = false
 var transition_time = 3.0
 var next_player = 0
 var next_enemy = 0
-var active_actor:Spatial = null #Points to character currently moving in the turn
+var active_actor:Actor = null #Points to character currently moving in the turn
 
 func _ready():
 	switch_turn()
-	countdown_timer.connect("timeout", self, "start_turn")
+	var _err
+	_err = countdown_timer.connect("timeout", self, "start_turn")
 
 func start_turn():
+	active_actor.activate()
 	if active_actor.get_parent() == enemies:
 		emit_signal("activate_enemy", active_actor)
 	elif active_actor.get_parent() == players:
@@ -38,14 +42,19 @@ func start_turn():
 func switch_turn():
 	if enemy_turn:
 		#Activate enemy...
+		#Add enemies to be baked into navmesh. Active enemy will be removed later.
+		for enemy in enemies.get_children():
+			enemy.add_to_group(Globals.NAVMESH_GROUP)
 		if enemies.get_child_count() > 0:
 			var enemy:Spatial = enemies.get_child(next_enemy)
 			active_actor = enemy
+			enemy.remove_from_group(Globals.NAVMESH_GROUP)
 			emit_signal("turn_switch", enemy)
 			#Mark next enemy
 			next_enemy += 1
 			if next_enemy >= enemies.get_child_count():
 				next_enemy = 0
+		navmesh.bake_navigation_mesh()
 	else:
 		#Activate player
 		var player:Spatial = players.get_child(next_player)

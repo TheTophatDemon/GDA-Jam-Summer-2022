@@ -8,11 +8,37 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "KinematicBody",
+"class": "Actor",
+"language": "GDScript",
+"path": "res://scripts/actor.gd"
+}, {
+"base": "Area",
+"class": "Shot",
+"language": "GDScript",
+"path": "res://scripts/shot.gd"
+}, {
+"base": "Node",
+"class": "TurnControl",
+"language": "GDScript",
+"path": "res://scripts/turn_control.gd"
+} ]
+_global_script_class_icons={
+"Actor": "",
+"Shot": "",
+"TurnControl": ""
+}
+
 [application]
 
 config/name="cronikles-versus"
 run/main_scene="res://scenes/title.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Globals="*res://scripts/globals.gd"
 
 [gui]
 
@@ -1101,6 +1127,10 @@ pointing/emulate_touch_from_mouse=true
 [layer_names]
 
 3d_physics/layer_2="terrain"
+3d_physics/layer_3="players"
+3d_physics/layer_4="enemies"
+3d_physics/layer_5="props"
+3d_physics/layer_6="projectiles"
 
 [physics]
 

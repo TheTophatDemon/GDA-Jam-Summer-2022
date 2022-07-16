@@ -1,6 +1,6 @@
 extends TextureButton
 
-onready var turn_control = get_node("../..")
+onready var turn_control = get_node("%TurnControl")
 onready var border = $Border
 
 export var hold_time = 1.0

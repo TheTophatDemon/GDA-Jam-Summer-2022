@@ -1,29 +1,43 @@
 extends Camera
 
-export var actors_path:NodePath = "../TurnControl"
 export var move_speed:float = 50.0
 var target_path:NodePath
+var temp_target_path:NodePath
 
 var offset:Vector3 = Vector3(0.0, 28.0, 14.0)
 var target_pos:Vector3
 
 func _ready():
-	var _err = get_node(actors_path).connect("turn_switch", self, "set_target")
+	var _err
+	_err = get_node("%TurnControl").connect("turn_switch", self, "set_target")
+	for player in get_node("%AlivePlayers").get_children():
+		_err = player.connect("hurt", self, "_on_actor_hurt", [player])
+	for enemy in get_node("%AliveEnemies").get_children():
+		_err = enemy.connect("hurt", self, "_on_actor_hurt", [enemy])
+
+func _on_actor_hurt(_perpetrator, actor):
+	temp_target_path = get_path_to(actor)
+	#Temporarily look at the hurt actor
+	yield(get_tree().create_timer(2.0), "timeout")
+	temp_target_path = ""
 
 func set_target(node:Spatial):
 	target_path = get_path_to(node)
 
 func _process(delta):
-	if not target_path.is_empty():
-		var node = get_node(target_path) as Spatial
-		if is_instance_valid(node):
-			target_pos = node.global_transform.origin + offset
-			var move_diff = target_pos - global_transform.origin
-			var move_dist = move_diff.length()
-			var move_amount = delta * move_speed
-			if move_dist > move_amount:
-				var move_dir = move_diff / move_dist
-				global_translate(move_dir * move_amount)
-			else:
-				global_transform.origin = target_pos
+	var node:Spatial = null
+	if not temp_target_path.is_empty():
+		node = get_node(temp_target_path)
+	elif not target_path.is_empty():
+		node = get_node(target_path)
+	if is_instance_valid(node):
+		target_pos = node.global_transform.origin + offset
+		var move_diff = target_pos - global_transform.origin
+		var move_dist = move_diff.length()
+		var move_amount = delta * move_speed
+		if move_dist > move_amount:
+			var move_dir = move_diff / move_dist
+			global_translate(move_dir * move_amount)
+		else:
+			global_transform.origin = target_pos
 			look_at(node.global_transform.origin, Vector3.UP)

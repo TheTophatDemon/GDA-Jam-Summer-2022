@@ -13,4 +13,4 @@ func _ready():
 		2: real_axis.z = 1.0
 
 func _process(delta):
-	rotate(real_axis, speed * delta)
+	rotate_object_local(real_axis, speed * delta)

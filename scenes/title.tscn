@@ -269,7 +269,7 @@ material/2 = ExtResource( 8 )
 reset_on_save = false
 
 [node name="The Cronikles" type="MeshInstance" parent="ViewportContainer/Viewport"]
-transform = Transform( 0.928118, -0.27401, 0.252025, 0.292383, 0.955552, -0.0378357, -0.230456, 0.108804, 0.966981, -3.71111, 1.08971, 0.0597541 )
+transform = Transform( 0.928118, -0.27401, 0.252025, 0.292383, 0.955552, -0.0378357, -0.230456, 0.108804, 0.966981, -5.27388, 0.613423, 0.0597541 )
 mesh = SubResource( 10 )
 
 [node name="CurseOfThe" type="MeshInstance" parent="ViewportContainer/Viewport"]
