@@ -26,7 +26,7 @@ var actions_left = actions_per_turn
 
 var label_clear_timer:float = 0.0 #When set above zero, counts down and will clear label text on reaching zero
 
-var max_health:int = 3
+export var max_health:int = 3
 onready var health:int = max_health
 var hit_cooldown:float = 1.0
 var hit_timer:float = 0.0
@@ -60,6 +60,8 @@ func die():
 	active = false
 	died = true
 	emit_signal("die", self)
+	if get_node_or_null("CollisionShape") != null:
+		remove_child($CollisionShape)
 	
 func show_health_stat():
 	var bars:String = ""
@@ -90,8 +92,8 @@ func expend_action(amount:int = 1):
 		emit_signal("no_actions_left")
 
 func _physics_process(delta):
-	var move = Vector2(velocity.x, velocity.z)
-	if not died:
+	if not died and active:
+		var move = Vector2(velocity.x, velocity.z)
 		var walk_speed = move.length()
 		if is_zero_approx(move_input.length_squared()):
 			#Apply friction
@@ -103,7 +105,7 @@ func _physics_process(delta):
 	else:
 		velocity.x = 0.0
 		velocity.z = 0.0
-	if is_on_floor():
+	if is_on_floor() or died:
 		velocity.y = 0.0
 	else:
 		velocity.y -= gravity * delta

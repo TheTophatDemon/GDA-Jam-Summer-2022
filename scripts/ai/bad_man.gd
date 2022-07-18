@@ -94,25 +94,29 @@ func _physics_process(_delta):
 		match action:
 			Action.PURSUE:
 				#Sight test
-				var in_sight = false
+				var in_sight = true
 				for cast in [cast1, cast2, cast3]:
 					if cast.is_colliding():
 						if (cast.get_collider().collision_layer & Globals.LAYER_BIT_PLAYERS) > 0:
-							in_sight = true
+							print("Hit: " + String(cast.get_collision_point()))
 							continue
 					in_sight = false
 					break
 				
 				if not nav.is_target_reached() and not in_sight:
 					var next_pos = nav.get_next_location()
-					var vel_to_pos = (next_pos - global_transform.origin).normalized() * max_move_speed
-					if nav.avoidance_enabled:
-						nav.set_velocity(vel_to_pos)
-					else:
-						_on_velocity_computed(vel_to_pos)
+					var vel_to_pos = (next_pos - global_transform.origin)
+					if vel_to_pos.length() >= nav.path_desired_distance:
+						if nav.avoidance_enabled:
+							nav.set_velocity(vel_to_pos)
+						else:
+							_on_velocity_computed(vel_to_pos)
 					rotation_target = Vector3(vel_to_pos.x, 0.0, vel_to_pos.z)
 				else:
-					nav.set_velocity(Vector3.ZERO)
+					if nav.avoidance_enabled:
+						nav.set_velocity(Vector3.ZERO)
+					else:
+						_on_velocity_computed(Vector3.ZERO)
 					action = Action.ATTACK
 			Action.ATTACK:
 				pass

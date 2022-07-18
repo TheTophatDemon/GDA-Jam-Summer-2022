@@ -4,6 +4,7 @@ class_name Player
 func _ready():
 	anim.set_blend_time("walk-loop", "battle_stance-loop", 0.5)
 	anim.set_blend_time("battle_stance-loop", "walk-loop", 0.25)
+	health = 1
 		
 func hurt(damage:int, perpetrator:Spatial)->bool:
 	var h = .hurt(damage, perpetrator)
