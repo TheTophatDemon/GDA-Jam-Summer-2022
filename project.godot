@@ -14,6 +14,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/actor.gd"
 }, {
+"base": "KinematicBody",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://scripts/ai/bad_man.gd"
+}, {
+"base": "KinematicBody",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scripts/player.gd"
+}, {
 "base": "Area",
 "class": "Shot",
 "language": "GDScript",
@@ -26,6 +36,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Actor": "",
+"Enemy": "",
+"Player": "",
 "Shot": "",
 "TurnControl": ""
 }

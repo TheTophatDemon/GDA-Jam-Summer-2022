@@ -1,4 +1,5 @@
 extends "res://scripts/actor.gd"
+class_name Enemy
 
 const CAST_OFFSET = Vector3(0.0, 1.0, 0.0)
 

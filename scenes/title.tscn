@@ -1,5 +1,6 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
+[ext_resource path="res://gfx/models/characters/rastera.glb" type="PackedScene" id=1]
 [ext_resource path="res://gfx/ui/start_button_press.png" type="Texture" id=2]
 [ext_resource path="res://gfx/ui/start_button.png" type="Texture" id=3]
 [ext_resource path="res://scripts/title_screen.gd" type="Script" id=4]
@@ -225,17 +226,17 @@ handle_input_locally = false
 render_target_update_mode = 3
 
 [node name="bad_man" parent="ViewportContainer/Viewport" instance=ExtResource( 5 )]
-transform = Transform( 0.34641, -0.0357639, -0.196776, 0, 0.393553, -0.0715278, 0.2, 0.0619448, 0.340827, 3, 3.51564, -3 )
+transform = Transform( 0.342302, 0.0102205, -0.2067, -0.00217938, 0.399668, 0.0161527, 0.206941, -0.0126967, 0.342074, 3, -0.956188, -3 )
 script = ExtResource( 13 )
 animation = "battle_stance-loop"
 
 [node name="bad_man2" parent="ViewportContainer/Viewport" instance=ExtResource( 5 )]
-transform = Transform( -0.217307, -0.043939, -0.332937, 0.00576796, -0.396991, 0.0486278, -0.335774, 0.021617, 0.216306, 5.97483, 6.04652, -2.25616 )
+transform = Transform( -0.216711, -0.00201322, -0.336203, -0.0170805, -0.39941, 0.0134016, -0.335774, 0.021617, 0.216306, 5.97483, 2.12651, -2.25616 )
 script = ExtResource( 9 )
 axis = 1
 
 [node name="bad_man3" parent="ViewportContainer/Viewport" instance=ExtResource( 5 )]
-transform = Transform( 0.238232, -0.0333242, -0.319585, -0.0199917, 0.395535, -0.0561464, 0.320696, 0.0494124, 0.233908, 8.59719, 1.76207, -1.2031 )
+transform = Transform( 0.238232, -0.0333242, -0.319585, 0.0236832, 0.398582, -0.023907, 0.320445, -0.00468329, 0.239361, 8.59719, -0.932799, -1.2031 )
 script = ExtResource( 13 )
 animation = "walk-loop"
 
@@ -253,12 +254,12 @@ environment = SubResource( 2 )
 transform = Transform( 1, 0, 0, 0, 0.541165, 0.840916, 0, -0.840916, 0.541165, 0, 0, 0 )
 
 [node name="dilan" parent="ViewportContainer/Viewport" instance=ExtResource( 7 )]
-transform = Transform( -0.138013, 0, 0.68626, 0, 0.7, 0, -0.68626, 0, -0.138013, -8.65597, 1.24273, -0.976585 )
+transform = Transform( -0.138013, 0, 0.68626, 0, 0.7, 0, -0.68626, 0, -0.138013, -9.38458, -2.07913, -1.74824 )
 script = ExtResource( 13 )
-animation = "walk-loop"
+animation = "battle_stance-loop"
 
 [node name="ray" parent="ViewportContainer/Viewport" instance=ExtResource( 6 )]
-transform = Transform( 0.26321, 0, 0.64863, 0, 0.7, 0, -0.64863, 0, 0.26321, -5.9138, 2.30483, -2.57407 )
+transform = Transform( 0.26321, 0, 0.64863, 0, 0.7, 0, -0.64863, 0, 0.26321, -5.9138, -1.95975, -5.14608 )
 script = ExtResource( 13 )
 animation = "point"
 
@@ -268,18 +269,23 @@ material/2 = ExtResource( 8 )
 [node name="AnimationPlayer" parent="ViewportContainer/Viewport/ray" index="1"]
 reset_on_save = false
 
+[node name="rastera" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
+transform = Transform( 0.00858855, 0, 0.699947, 0, 0.7, 0, -0.699947, 0, 0.00858855, -8.31961, -1.97259, -4.17049 )
+script = ExtResource( 13 )
+animation = "battle_stance-loop"
+
 [node name="The Cronikles" type="MeshInstance" parent="ViewportContainer/Viewport"]
-transform = Transform( 0.928118, -0.27401, 0.252025, 0.292383, 0.955552, -0.0378357, -0.230456, 0.108804, 0.966981, -5.27388, 0.613423, 0.0597541 )
+transform = Transform( 0.928118, -0.27401, 0.252025, 0.292383, 0.955552, -0.0378357, -0.230456, 0.108804, 0.966981, -5.27388, 4.00218, 0.0597541 )
 mesh = SubResource( 10 )
 
 [node name="CurseOfThe" type="MeshInstance" parent="ViewportContainer/Viewport"]
-transform = Transform( 1, 0, 0, 0, 0.99358, -0.113134, 0, 0.113134, 0.99358, 0, 1.1702, 0 )
+transform = Transform( 1, 0, 0, 0, 0.99358, -0.113134, 0, 0.113134, 0.99358, 0, 3.37525, 0 )
 mesh = SubResource( 6 )
 script = ExtResource( 12 )
 bob_axes = Vector3( 0, 0, 1 )
 
 [node name="CrappyKillerContraptions" type="MeshInstance" parent="ViewportContainer/Viewport"]
-transform = Transform( 1, 0, 0, 0, 0.999931, -0.0117458, 0, 0.0117458, 0.999931, 0, 0.0844434, 0 )
+transform = Transform( 1, 0, 0, 0, 0.999931, -0.0117458, 0, 0.0117458, 0.999931, 0, 2.28949, 0 )
 mesh = SubResource( 7 )
 script = ExtResource( 12 )
 bob_offset = 0.5

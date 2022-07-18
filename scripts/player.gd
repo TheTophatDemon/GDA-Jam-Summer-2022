@@ -1,13 +1,22 @@
 extends "res://scripts/actor.gd"
+class_name Player
 
 func _ready():
 	anim.set_blend_time("walk-loop", "battle_stance-loop", 0.5)
 	anim.set_blend_time("battle_stance-loop", "walk-loop", 0.25)
-	
-func _on_shot_hit(shot:Shot):
-	._on_shot_hit(shot)
-	if shot.shooter != self:
+		
+func hurt(damage:int, perpetrator:Spatial)->bool:
+	var h = .hurt(damage, perpetrator)
+	if h and not died:
 		anim.play("hurt")
+	return h
+	
+func die():
+	.die()
+	var dead_players = get_node("%DeadPlayers")
+	get_parent().remove_child(self)
+	dead_players.add_child(self)
+	anim.play("die")
 	
 func _process(_delta):
 	if active:
@@ -26,5 +35,5 @@ func _process(_delta):
 				anim.play("walk-loop")
 			else:
 				anim.play("battle_stance-loop")
-	else:
+	elif not died:
 		if anim.current_animation != "hurt": anim.play("battle_stance-loop")

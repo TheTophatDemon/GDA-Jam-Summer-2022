@@ -46,24 +46,24 @@ func switch_turn():
 		for enemy in enemies.get_children():
 			enemy.add_to_group(Globals.NAVMESH_GROUP)
 		if enemies.get_child_count() > 0:
+			if next_enemy >= enemies.get_child_count():
+				next_enemy = 0
 			var enemy:Spatial = enemies.get_child(next_enemy)
 			active_actor = enemy
 			enemy.remove_from_group(Globals.NAVMESH_GROUP)
 			emit_signal("turn_switch", enemy)
 			#Mark next enemy
 			next_enemy += 1
-			if next_enemy >= enemies.get_child_count():
-				next_enemy = 0
 		navmesh.bake_navigation_mesh()
 	else:
 		#Activate player
+		if next_player >= players.get_child_count():
+			next_player = 0
 		var player:Spatial = players.get_child(next_player)
 		active_actor = player
 		emit_signal("turn_switch", player)
 		#Mark next player
 		next_player += 1
-		if next_player >= players.get_child_count():
-			next_player = 0
 	enemy_turn = not enemy_turn
 	countdown_timer.wait_time = transition_time
 	countdown_timer.start()

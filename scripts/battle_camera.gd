@@ -1,6 +1,6 @@
 extends Camera
 
-export var move_speed:float = 50.0
+export var move_speed:float = 75.0
 var target_path:NodePath
 var temp_target_path:NodePath
 
@@ -12,11 +12,17 @@ func _ready():
 	_err = get_node("%TurnControl").connect("turn_switch", self, "set_target")
 	for player in get_node("%AlivePlayers").get_children():
 		_err = player.connect("hurt", self, "_on_actor_hurt", [player])
+		_err = player.connect("die", self, "_on_actor_hurt", [player])
 	for enemy in get_node("%AliveEnemies").get_children():
 		_err = enemy.connect("hurt", self, "_on_actor_hurt", [enemy])
+		_err = enemy.connect("die", self, "_on_actor_hurt", [enemy])
 
 func _on_actor_hurt(_perpetrator, actor):
-	temp_target_path = get_path_to(actor)
+	if actor.health <= 0:
+		if actor is Player: temp_target_path = "%DeadPlayers/" + actor.name
+		elif actor is Enemy: temp_target_path = "%DeadEnemies/" + actor.name
+	else:
+		temp_target_path = get_path_to(actor)
 	#Temporarily look at the hurt actor
 	yield(get_tree().create_timer(2.0), "timeout")
 	temp_target_path = ""
