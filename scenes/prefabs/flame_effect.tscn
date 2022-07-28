@@ -1,0 +1,77 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://gfx/materials/fireball.png" type="Texture" id=1]
+[ext_resource path="res://scripts/hazard_area.gd" type="Script" id=2]
+
+[sub_resource type="SphereShape" id=8]
+radius = 1.6081
+
+[sub_resource type="SphereShape" id=9]
+radius = 0.789293
+
+[sub_resource type="SphereShape" id=10]
+radius = 0.347458
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0, 0.20073, 0.492701, 0.843066 )
+colors = PoolColorArray( 1, 1, 1, 1, 0.989042, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0.465909 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), -0.135, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=1]
+direction = Vector3( 0, 0, -1 )
+spread = 17.16
+gravity = Vector3( 0, -3.101, 0 )
+initial_velocity = 7.0
+initial_velocity_random = 0.26
+linear_accel = -7.5
+scale = 2.0
+scale_curve = SubResource( 5 )
+color_ramp = SubResource( 7 )
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_specular_mode = 4
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="QuadMesh" id=3]
+material = SubResource( 2 )
+
+[node name="FlameEffect" type="Area"]
+transform = Transform( 2.51, 0, 0, 0, 2.51, 0, 0, 0, 2.51, 0, 0, 0 )
+collision_layer = 32
+collision_mask = 12
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.23829 )
+shape = SubResource( 8 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.74122 )
+shape = SubResource( 9 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.36984 )
+shape = SubResource( 10 )
+
+[node name="Particles" type="Particles" parent="."]
+amount = 50
+visibility_aabb = AABB( -10.4527, -8.14171, -10.7208, 20.9053, 16.2834, 21.4417 )
+local_coords = false
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 3 )

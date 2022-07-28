@@ -1,7 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://gfx/fonts/DejaVuSans.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://scripts/ui/turn_skip_button.gd" type="Script" id=3]
+[ext_resource path="res://scripts/ui/joystick_butt.gd" type="Script" id=4]
+[ext_resource path="res://gfx/ui/skip_turn_butt_press.png" type="Texture" id=5]
+[ext_resource path="res://gfx/ui/move_wheel.png" type="Texture" id=6]
+[ext_resource path="res://gfx/ui/skip_turn_butt.png" type="Texture" id=7]
+[ext_resource path="res://gfx/ui/skip_turn_butt_disable.png" type="Texture" id=8]
+[ext_resource path="res://gfx/ui/stamina_bar.png" type="Texture" id=9]
+[ext_resource path="res://gfx/ui/stamina_icon.png" type="Texture" id=10]
 
 [sub_resource type="CapsuleShape" id=2]
 radius = 1.75486
@@ -11,6 +19,25 @@ height = 3.60935
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 2 )
+
+[sub_resource type="ImageTexture" id=4]
+
+[sub_resource type="Gradient" id=5]
+interpolation_mode = 1
+offsets = PoolRealArray( 0.115523 )
+colors = PoolColorArray( 0.239216, 0.239216, 0.239216, 1 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+width = 48
+
+[sub_resource type="Gradient" id=7]
+offsets = PoolRealArray( 0.530686 )
+colors = PoolColorArray( 0.102321, 0.871094, 0.0578461, 1 )
+
+[sub_resource type="GradientTexture" id=8]
+gradient = SubResource( 7 )
+width = 48
 
 [node name="Actor" type="KinematicBody"]
 collision_layer = 5
@@ -31,3 +58,83 @@ fixed_size = true
 modulate = Color( 1, 0, 0, 1 )
 text = "HP [♥♥♡]"
 font = SubResource( 3 )
+
+[node name="PlayerUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="SkipButt" type="TextureButton" parent="PlayerUI" groups=["player_ui"]]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -156.0
+margin_top = -89.0
+margin_right = -92.0
+margin_bottom = -57.0
+rect_scale = Vector2( 2, 2 )
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 5 )
+texture_disabled = ExtResource( 8 )
+script = ExtResource( 3 )
+
+[node name="Border" type="TextureRect" parent="PlayerUI/SkipButt"]
+modulate = Color( 0, 0, 0, 1 )
+show_behind_parent = true
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 32, 16 )
+texture = ExtResource( 7 )
+
+[node name="MoveRegion" type="TextureButton" parent="PlayerUI" groups=["player_ui"]]
+modulate = Color( 1, 1, 1, 0.196078 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -160.0
+margin_top = -160.0
+margin_right = 160.0
+margin_bottom = 160.0
+focus_mode = 0
+shortcut_in_tooltip = false
+action_mode = 0
+enabled_focus_mode = 0
+keep_pressed_outside = true
+texture_normal = ExtResource( 6 )
+texture_pressed = SubResource( 4 )
+script = ExtResource( 4 )
+left_action = "move_left"
+right_action = "move_right"
+up_action = "move_up"
+down_action = "move_down"
+
+[node name="StaminaBar" type="TextureProgress" parent="PlayerUI"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = -360.0
+margin_right = 64.0
+margin_bottom = -40.0
+step = 0.0
+value = 45.647
+texture_under = SubResource( 6 )
+texture_over = ExtResource( 9 )
+texture_progress = SubResource( 8 )
+fill_mode = 3
+nine_patch_stretch = true
+stretch_margin_left = 4
+stretch_margin_top = 4
+stretch_margin_right = 4
+stretch_margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="PlayerUI/StaminaBar"]
+margin_left = -1.0
+margin_top = -61.0
+margin_right = 47.0
+margin_bottom = -13.0
+texture = ExtResource( 10 )

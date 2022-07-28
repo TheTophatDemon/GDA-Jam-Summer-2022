@@ -7,7 +7,7 @@
 [ext_resource path="res://gfx/models/characters/dilan.glb" type="PackedScene" id=5]
 [ext_resource path="res://gfx/fonts/stencil.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://gfx/fonts/stencil_28.tres" type="DynamicFont" id=7]
-[ext_resource path="res://scripts/ui/lose_screen.gd" type="Script" id=8]
+[ext_resource path="res://scripts/ui/end_screen.gd" type="Script" id=8]
 
 [sub_resource type="Image" id=10]
 data = {

@@ -1,0 +1,7 @@
+sound/shimmer_1.flac by qubodup of opengameart.org under CC-BY 3.0
+sound/stonedb_womp.wav by StonedB of freesound.org under CC-BY 3.0
+sound/flamethrower.wav by AslakHostaker of freesound.org under CC0
+sound/explosion.mp3 by deleted_user_5405837 of freesound.org under CC-BY 3.0
+
+CC-BY 3.0:
+https://creativecommons.org/licenses/by/3.0/

@@ -1,0 +1,416 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://gfx/models/characters/bad_man.glb" type="PackedScene" id=1]
+[ext_resource path="res://scripts/play_anim.gd" type="Script" id=2]
+[ext_resource path="res://gfx/models/characters/ray.glb" type="PackedScene" id=3]
+[ext_resource path="res://gfx/models/characters/rastera.glb" type="PackedScene" id=4]
+[ext_resource path="res://gfx/models/characters/dilan.glb" type="PackedScene" id=5]
+[ext_resource path="res://gfx/fonts/stencil.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://gfx/fonts/stencil_28.tres" type="DynamicFont" id=7]
+[ext_resource path="res://scripts/ui/end_screen.gd" type="Script" id=8]
+[ext_resource path="res://gfx/models/characters/bad_man_gibs.glb" type="PackedScene" id=9]
+[ext_resource path="res://gfx/materials/grass_dead.tres" type="Material" id=10]
+[ext_resource path="res://gfx/ui/star_empty.png" type="Texture" id=11]
+[ext_resource path="res://gfx/ui/star_full.png" type="Texture" id=12]
+[ext_resource path="res://gfx/fonts/DejaVuSans.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://sound/shimmer_1.wav" type="AudioStream" id=14]
+[ext_resource path="res://sound/stonedb_womp.wav" type="AudioStream" id=15]
+
+[sub_resource type="PlaneMesh" id=5]
+material = ExtResource( 10 )
+size = Vector2( 1000, 1000 )
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 80.6322, 1, 68.3258 )
+
+[sub_resource type="Environment" id=7]
+background_mode = 1
+background_color = Color( 0.494118, 0.407843, 1, 1 )
+ambient_light_color = Color( 0.521569, 0.521569, 0.521569, 1 )
+fog_enabled = true
+fog_color = Color( 0.427451, 0.435294, 1, 1 )
+fog_depth_end = 50.0
+
+[sub_resource type="DynamicFont" id=9]
+size = 96
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=14]
+size = 32
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 13 )
+
+[sub_resource type="Animation" id=13]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("StarEmpty:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StarEmpty2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("StarFull:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("StarFull:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.1, 0.1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("StarEmpty:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("StarEmpty2:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.1, 0.1 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("../Get Gud Lol:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("AudioStreamPlayer:pitch_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "default"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("StarEmpty:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StarEmpty2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.4, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("StarFull:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("StarFull:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.1, 0.1 ), Vector2( 1.25, 1.25 ), Vector2( 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("StarEmpty:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.6, 0.7, 0.9, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.1, 0.1 ), Vector2( 1.25, 1.25 ), Vector2( 1, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("StarEmpty2:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 1.5, 1.7, 1.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.1, 0.1 ), Vector2( 1.25, 1.25 ), Vector2( 1, 1 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("../Get Gud Lol:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 2.2, 2.4, 2.6, 2.8, 3, 3.2, 3.4, 3.6, 3.8, 4, 4.2, 4.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false, true, false, true, false, true, false ]
+}
+tracks/7/type = "audio"
+tracks/7/path = NodePath("AudioStreamPlayer")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 14 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 15 )
+} ],
+"times": PoolRealArray( 0.2, 0.8, 1.4, 2.1 )
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("AudioStreamPlayer:pitch_scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 2, 2.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.67 ]
+}
+
+[node name="WinScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 8 )
+time = 6.0
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1024, 600 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="World" type="Spatial" parent="ViewportContainer/Viewport"]
+
+[node name="Camera" type="Camera" parent="ViewportContainer/Viewport/World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.28912, 6.11405 )
+
+[node name="bad_man" parent="ViewportContainer/Viewport/World" instance=ExtResource( 1 )]
+transform = Transform( 0.40681, 0.569654, 2.49004e-08, 0, -3.0598e-08, 0.7, 0.569654, -0.40681, -1.77822e-08, -8.56755, 0.591215, -14.0857 )
+
+[node name="bad_man_gibs" parent="ViewportContainer/Viewport/World" instance=ExtResource( 9 )]
+transform = Transform( 0.039624, 0.698878, 0, -0.698878, 0.039624, 0, 0, 0, 0.7, -2.14567, 2.25319, -13.7259 )
+
+[node name="bm_leg-convcol" parent="ViewportContainer/Viewport/World/bad_man_gibs" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.51409, 1.05129, 0.0736713 )
+mode = 1
+
+[node name="bm_head-convcol" parent="ViewportContainer/Viewport/World/bad_man_gibs" index="1"]
+transform = Transform( 0.623193, 0.0213636, 0.781776, 0.0213637, 0.998789, -0.044324, -0.781776, 0.044324, 0.621981, 2.79026, 7.65626, -0.0994911 )
+mode = 1
+
+[node name="bm_arm-convcol" parent="ViewportContainer/Viewport/World/bad_man_gibs" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.27246, 5.08246, 2.65331 )
+mode = 1
+
+[node name="bm_blaster-convcol" parent="ViewportContainer/Viewport/World/bad_man_gibs" index="3"]
+transform = Transform( 0.995349, -0.082034, -0.0505062, -0.082034, -0.446896, -0.890816, 0.0505062, 0.890817, -0.451547, 3.09956, 1.17591, 2.18057 )
+mode = 1
+
+[node name="bm_chest-convcol" parent="ViewportContainer/Viewport/World/bad_man_gibs" index="4"]
+transform = Transform( -0.0905983, -0.171372, -0.981032, 0.959355, -0.27938, -0.0397929, -0.267261, -0.944763, 0.189718, 2.72373, 4.67102, -0.027132 )
+mode = 1
+
+[node name="bm_base-convcol" parent="ViewportContainer/Viewport/World/bad_man_gibs" index="5"]
+transform = Transform( 0.0860904, 0.0332413, -0.995732, 0.772774, 0.628579, 0.0877979, 0.628815, -0.777035, 0.0284265, 3.09686, 3.08534, -3.80326 )
+mode = 1
+
+[node name="bm_leg2-convcol" parent="ViewportContainer/Viewport/World/bad_man_gibs" index="6"]
+transform = Transform( 0.996407, -0.063371, -0.0561875, -0.063371, -0.117722, -0.991022, 0.0561876, 0.991022, -0.121315, 3.42642, 8.65752, -3.6588 )
+mode = 1
+
+[node name="ray" parent="ViewportContainer/Viewport/World" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.521818, -9.53674e-07, -5.58937 )
+script = ExtResource( 2 )
+animation = "point"
+offset = 1.0
+
+[node name="rastera" parent="ViewportContainer/Viewport/World" instance=ExtResource( 4 )]
+transform = Transform( 0.817517, 0, 0.575904, 0, 1, 0, -0.575904, 0, 0.817517, -3.94344, -9.53674e-07, -8.33744 )
+script = ExtResource( 2 )
+animation = "battle_stance-loop"
+offset = 1.0
+pause = true
+
+[node name="dilan" parent="ViewportContainer/Viewport/World" instance=ExtResource( 5 )]
+transform = Transform( 0.987336, 0, -0.15864, 0, 1, 0, 0.15864, 0, 0.987336, 4.69334, 0, -9.97698 )
+script = ExtResource( 2 )
+animation = "battle_stance_wield-loop"
+offset = 1.0
+pause = true
+
+[node name="Ground" type="MeshInstance" parent="ViewportContainer/Viewport/World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -36.54 )
+mesh = SubResource( 5 )
+
+[node name="StaticBody" type="StaticBody" parent="ViewportContainer/Viewport/World/Ground"]
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/World/Ground/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+shape = SubResource( 11 )
+
+[node name="OmniLight" type="DirectionalLight" parent="ViewportContainer/Viewport/World"]
+transform = Transform( 1, 0, 0, 0, 0.897466, 0.441083, 0, -0.441083, 0.897466, 0, 4.39145, 0 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="ViewportContainer/Viewport/World"]
+environment = SubResource( 7 )
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+margin_bottom = 146.0
+custom_fonts/font = SubResource( 9 )
+text = "MADE TO WIN"
+align = 1
+valign = 1
+
+[node name="Label2" type="Label" parent="."]
+anchor_right = 1.0
+margin_left = 4.0
+margin_top = 114.0
+margin_right = 4.0
+margin_bottom = 185.0
+custom_fonts/font = ExtResource( 7 )
+text = "WORLD IS A SAVE 2219"
+align = 1
+valign = 1
+
+[node name="Get Gud Lol" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -58.0
+custom_fonts/font = SubResource( 14 )
+text = "Get gud lol"
+align = 1
+valign = 1
+
+[node name="Stars" type="Node2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="StarFull" type="Sprite" parent="Stars"]
+visible = false
+position = Vector2( 344, 472 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 12 )
+
+[node name="StarEmpty" type="Sprite" parent="Stars"]
+visible = false
+position = Vector2( 516, 474 )
+texture = ExtResource( 11 )
+
+[node name="StarEmpty2" type="Sprite" parent="Stars"]
+visible = false
+position = Vector2( 686, 472 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 11 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Stars"]
+anims/RESET = SubResource( 13 )
+anims/default = SubResource( 12 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Stars"]
+stream = ExtResource( 15 )
+
+[editable path="ViewportContainer/Viewport/World/bad_man_gibs"]

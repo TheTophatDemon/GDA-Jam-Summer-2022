@@ -4,13 +4,16 @@ class_name Enemy
 const CAST_OFFSET = Vector3(0.0, 1.0, 0.0)
 
 const SHOT_PREFAB = preload("res://scenes/prefabs/lazer_shot.tscn")
+const EXPLOSION_PREFAB = preload("res://scenes/prefabs/explosion_effect.tscn")
+const GIBS_PREFAB = preload("res://gfx/models/characters/bad_man_gibs.glb")
 
 onready var players = get_node("%AlivePlayers")
 onready var nav:NavigationAgent = $NavigationAgent
 onready var shooter:Spatial = $Model/badman_rig/Skeleton/Shooter
-onready var cast1 = shooter.get_node("Cast1")
-onready var cast2 = shooter.get_node("Cast2")
-onready var cast3 = shooter.get_node("Cast3")
+onready var cast1 = get_node("Cast1")
+onready var cast2 = get_node("Cast2")
+onready var cast3 = get_node("Cast3")
+onready var smoke_fx = $Smoke
 
 enum Action { PURSUE, ATTACK }
 var action = Action.PURSUE
@@ -25,7 +28,7 @@ func _ready():
 	anim.set_blend_time("battle_stance-loop", "walk-loop", 0.25)
 	var _err
 	_err = anim.connect("animation_finished", self, "_on_animation_finish")
-	_err = connect("no_actions_left", self, "_on_no_actions_left")
+	_err = anim.connect("animation_started", self, "_on_animation_start")
 	
 	nav.set_target_location(global_transform.origin)
 	_err = nav.connect("velocity_computed", self, "_on_velocity_computed")
@@ -36,18 +39,50 @@ func activate():
 	action = Action.PURSUE
 
 func _on_velocity_computed(new_velocity:Vector3):
-	if active: move_input = Vector2(new_velocity.x, new_velocity.z).normalized()
+	if active and movement_time > 0.0: 
+		move_input = Vector2(new_velocity.x, new_velocity.z).normalized()
 	
-func _on_animation_finish(_anim:String):
-	pass
+func _on_animation_start(anim_name:String):
+	match anim_name:
+		"die":
+			smoke_fx.emitting = true
 	
-#Skip turn X seconds after expending last action
-func _on_no_actions_left():
-	yield(get_tree().create_timer(2.0), "timeout")
-	turn_control.skip_turn()
+func _on_animation_finish(anim_name:String):
+	match anim_name:
+		"die":
+			smoke_fx.emitting = false
+			if died:
+				#Spawn explosion
+				var ex = EXPLOSION_PREFAB.instance()
+				get_node("/root/world").add_child(ex)
+				ex.global_transform.origin = global_transform.origin
+				#Spawn gibs
+				var gibs = GIBS_PREFAB.instance()
+				get_node("/root/world").add_child(gibs)
+				gibs.global_transform.origin = global_transform.origin
+				#Apply impulse to gibs so they fly out
+				for child in gibs.get_children():
+					var rb = child as RigidBody
+					rb.apply_impulse(Vector3.ZERO, (rb.global_transform.origin - gibs.global_transform.origin) * 2.0)
+					rb.apply_torque_impulse(Vector3(randf() * 10.0 - 5.0, randf() * 10.0 - 5.0, randf() * 10.0 - 5.0))
+				#Delete actor
+				queue_free()
+	
+func hurt(damage:int, perpetrator:Spatial)->bool:
+	var h = .hurt(damage, perpetrator)
+	if h and not died:
+		anim.play("die")
+	return h
+	
+func die():
+	.die()
+	var dead_enemies = get_node("/root/world/%DeadEnemies")
+	get_parent().remove_child(self)
+	dead_enemies.add_child(self)
+	anim.play("die")
 	
 func _process(delta):
-	if active:
+	if active and not died:
 		#Target nearest player
 		var nearest_ply:Spatial = null
 		var nearest_sqdist:float = 100000.0
@@ -77,17 +112,24 @@ func _process(delta):
 						#shot.owner = owner
 						shot.shooter = self
 						get_tree().root.add_child(shot)
+						emit_signal("shoot", shot, self)
 						expend_action()
 					
 				elif anim.current_animation != "shoot":
 					anim.play("battle_stance-loop")
+					
+				if actions_left <= 0:
+					action = Action.PURSUE
 			Action.PURSUE:
 				if !is_zero_approx(velocity.x + velocity.z):
 					anim.play("walk-loop")
 				else:
 					anim.play("battle_stance-loop")
-	else:
-		anim.play("battle_stance-loop")
+					
+				if movement_time <= 0.0:
+					turn_control.skip_turn()
+	elif not died:
+		if anim.current_animation != "die": anim.play("battle_stance-loop")
 	
 func _physics_process(_delta):
 	if active:
@@ -98,7 +140,7 @@ func _physics_process(_delta):
 				for cast in [cast1, cast2, cast3]:
 					if cast.is_colliding():
 						if (cast.get_collider().collision_layer & Globals.LAYER_BIT_PLAYERS) > 0:
-							print("Hit: " + String(cast.get_collision_point()))
+							#print("Hit: " + String(cast.get_collision_point()))
 							continue
 					in_sight = false
 					break
@@ -117,6 +159,9 @@ func _physics_process(_delta):
 						nav.set_velocity(Vector3.ZERO)
 					else:
 						_on_velocity_computed(Vector3.ZERO)
-					action = Action.ATTACK
+					if actions_left > 0: 
+						action = Action.ATTACK
+					else:
+						turn_control.skip_turn()
 			Action.ATTACK:
 				pass

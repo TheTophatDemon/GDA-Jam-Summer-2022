@@ -1,0 +1,76 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://gfx/models/billboard_particle.tres" type="QuadMesh" id=1]
+[ext_resource path="res://scripts/explosion.gd" type="Script" id=2]
+[ext_resource path="res://sound/explosion.mp3" type="AudioStream" id=3]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0.0114943, 1 )
+colors = PoolColorArray( 0.310059, 0.310059, 0.310059, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.291188, 0.563218, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 0.960938, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.00227273 ), -2.89164, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+initial_velocity = 19.48
+initial_velocity_random = 0.3
+scale = 4.0
+scale_random = 0.3
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 4 )
+color_initial_ramp = SubResource( 2 )
+
+[sub_resource type="Gradient" id=8]
+colors = PoolColorArray( 1, 1, 1, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=10]
+direction = Vector3( 0, 1, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 5.0
+scale = 5.0
+scale_random = 0.45
+color_ramp = SubResource( 9 )
+
+[node name="Explosion" type="Particles"]
+emitting = false
+amount = 50
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB( -100, -100, -100, 200, 200, 200 )
+process_material = SubResource( 7 )
+draw_pass_1 = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Smoke" type="Particles" parent="."]
+emitting = false
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB( -23.0483, -17.6096, -26.0446, 46.0966, 35.2191, 52.0892 )
+process_material = SubResource( 10 )
+draw_pass_1 = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -2.419
+autoplay = true

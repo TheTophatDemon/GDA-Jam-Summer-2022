@@ -13,9 +13,14 @@ func _ready():
 	for player in get_node("%AlivePlayers").get_children():
 		_err = player.connect("hurt", self, "_on_actor_hurt", [player])
 		_err = player.connect("die", self, "_on_actor_hurt", [player])
+		_err = player.connect("shoot", self, "_on_actor_shoot")
 	for enemy in get_node("%AliveEnemies").get_children():
 		_err = enemy.connect("hurt", self, "_on_actor_hurt", [enemy])
 		_err = enemy.connect("die", self, "_on_actor_hurt", [enemy])
+		_err = enemy.connect("shoot", self, "_on_actor_shoot")
+
+func _on_actor_shoot(shot, _actor):
+	temp_target_path = get_path_to(shot)
 
 func _on_actor_hurt(_perpetrator, actor):
 	if actor.health <= 0:
@@ -28,14 +33,15 @@ func _on_actor_hurt(_perpetrator, actor):
 	temp_target_path = ""
 
 func set_target(node:Spatial):
-	target_path = get_path_to(node)
+	if is_instance_valid(node): target_path = get_path_to(node)
 
 func _process(delta):
 	var node:Spatial = null
 	if not temp_target_path.is_empty():
-		node = get_node(temp_target_path)
-	elif not target_path.is_empty():
-		node = get_node(target_path)
+		node = get_node_or_null(temp_target_path)
+		if node == null: temp_target_path = ""
+	if temp_target_path.is_empty() and not target_path.is_empty():
+		node = get_node_or_null(target_path)
 	if is_instance_valid(node):
 		target_pos = node.global_transform.origin + offset
 		var move_diff = target_pos - global_transform.origin

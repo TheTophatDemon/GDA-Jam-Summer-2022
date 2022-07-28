@@ -1,4 +1,4 @@
-extends Spatial
+extends Node
 
 export var animation = "default"
 export var offset:float = 0.0

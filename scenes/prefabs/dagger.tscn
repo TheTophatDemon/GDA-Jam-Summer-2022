@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://gfx/models/dagger.glb" type="PackedScene" id=1]
+[ext_resource path="res://scripts/shot.gd" type="Script" id=2]
+
+[sub_resource type="RayShape" id=1]
+length = 3.34729
+
+[node name="Shot" type="Area"]
+collision_layer = 32
+collision_mask = 31
+input_ray_pickable = false
+script = ExtResource( 2 )
+rotate_speed = 1.0
+move_speed = 40.0
+
+[node name="Model" parent="." instance=ExtResource( 1 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.97803e-08, 0, -0.531319 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.56614 )
+shape = SubResource( 1 )

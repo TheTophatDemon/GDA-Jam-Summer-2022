@@ -8,9 +8,8 @@ signal turn_switch(actor)
 onready var players = get_node("%AlivePlayers")
 onready var enemies = get_node("%AliveEnemies")
 onready var turn_timer_ui = $TurnTimer
-onready var player_ui = $PlayerUI
-onready var countdown_label = $TurnTimer/Countdown
-onready var countdown_timer = $TurnTimer/Countdown/Timer
+onready var countdown_label = $Countdown
+onready var countdown_timer = $Countdown/Timer
 onready var navmesh:NavigationMeshInstance = get_node("../NavMesh")
 onready var camera = get_node("../Camera")
 
@@ -18,15 +17,20 @@ var enemy_turn = false
 var turn_timer = 0.0
 var turn_time = 30.0
 var turn_started = false
-var transition_time = 3.0
+var transition_time = 2.0
 var next_player = 0
 var next_enemy = 0
 var active_actor:Actor = null #Points to character currently moving in the turn
+
+var end_timer = Timer.new()
 
 func _ready():
 	switch_turn()
 	var _err
 	_err = countdown_timer.connect("timeout", self, "start_turn")
+	add_child(end_timer)
+	end_timer.one_shot = true
+	_err = end_timer.connect("timeout", self, "_on_game_end")
 
 func start_turn():
 	active_actor.activate()
@@ -34,7 +38,6 @@ func start_turn():
 		emit_signal("activate_enemy", active_actor)
 	elif active_actor.get_parent() == players:
 		emit_signal("activate_player", active_actor)
-		player_ui.visible = true
 	else:
 		print("Actor misplaced!")
 	turn_started = true
@@ -43,12 +46,11 @@ func start_turn():
 func switch_turn():
 	if players.get_child_count() <= 0 or enemies.get_child_count() <= 0:
 		#Activate win/lose conditions
-		player_ui.visible = false
 		turn_timer_ui.visible = false
 		countdown_timer.stop()
+		end_timer.start(2.0)
 		camera.target_path = camera.temp_target_path
-		yield(get_tree().create_timer(2.0), "timeout")
-		if players.get_child_count() <= 0: get_tree().change_scene("res://scenes/lose.tscn")
+		emit_signal("turn_switch", null)
 	else:
 		if enemy_turn:
 			#Activate enemy...
@@ -77,10 +79,9 @@ func switch_turn():
 		enemy_turn = not enemy_turn
 		countdown_timer.wait_time = transition_time
 		countdown_timer.start()
-		turn_started = false
 		turn_timer_ui.value = turn_timer_ui.max_value
-		player_ui.visible = false
 		countdown_label.visible = true
+	turn_started = false
 
 func skip_turn():
 	turn_timer = turn_time
@@ -93,4 +94,13 @@ func _process(delta):
 			switch_turn()
 			turn_timer = 0.0
 	else:
-		countdown_label.text = str(ceil(countdown_timer.time_left))
+		match int(ceil(countdown_timer.time_left)):
+			2: countdown_label.text = "READY"
+			1: countdown_label.text = "GO!"
+			_: countdown_label.text = ""
+
+func _on_game_end():
+	if players.get_child_count() <= 0: 
+		var _succ = get_tree().change_scene("res://scenes/lose.tscn")
+	elif enemies.get_child_count() <= 0:
+		var _succ = get_tree().change_scene("res://scenes/win.tscn")

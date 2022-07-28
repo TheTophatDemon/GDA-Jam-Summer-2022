@@ -257,6 +257,7 @@ transform = Transform( 1, 0, 0, 0, 0.541165, 0.840916, 0, -0.840916, 0.541165, 0
 transform = Transform( -0.138013, 0, 0.68626, 0, 0.7, 0, -0.68626, 0, -0.138013, -9.38458, -2.07913, -1.74824 )
 script = ExtResource( 13 )
 animation = "battle_stance-loop"
+offset = 0.364
 
 [node name="ray" parent="ViewportContainer/Viewport" instance=ExtResource( 6 )]
 transform = Transform( 0.26321, 0, 0.64863, 0, 0.7, 0, -0.64863, 0, 0.26321, -5.9138, -1.95975, -5.14608 )

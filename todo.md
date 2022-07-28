@@ -1,11 +1,17 @@
 # TODO
 [x] Make player movement based on manual control
-[ ] Enemy movement
-[ ] Enemy shooting
-[ ] Player damage
-[ ] Player death
+[x] Enemy movement
+[x] Enemy shooting
+[x] Player damage
+[x] Player death
+[x] Rastera attack
+[ ] Figure out when to end the turn for AI
+[ ] Centralize the code for pausing actors during actions
+[ ] Ray attack
 
 # IDEAS
 [ ] Players can shove eachother out of the way
 [ ] Ray can move furniture with telekenesis and block enemies
 [ ] Dilan can burn control panels to open doors
+[ ] Ray can give his turn to other players
+[ ] Ray can teleport and swap places with another player
