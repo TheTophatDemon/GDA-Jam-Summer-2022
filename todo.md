@@ -5,8 +5,9 @@
 [x] Player damage
 [x] Player death
 [x] Rastera attack
-[ ] Figure out when to end the turn for AI
-[ ] Centralize the code for pausing actors during actions
+[x] Update actor script for refactor
+[x] Update battle camera script for refactor
+[x] Figure out when to end the turn for AI
 [ ] Ray attack
 
 # IDEAS

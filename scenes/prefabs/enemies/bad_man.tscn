@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/prefabs/actor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://gfx/models/characters/vertex_color_outlined.material" type="Material" id=4]
 [ext_resource path="res://gfx/models/characters/vertex_color_shiny_outlined.material" type="Material" id=5]
-[ext_resource path="res://scenes/prefabs/smoke_effect.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/prefabs/effects/smoke_effect.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "battle_stance-loop"
@@ -865,7 +865,7 @@ debug_shape_thickness = 5
 bones/15/bound_children = [ NodePath("Shooter") ]
 
 [node name="Shooter" type="BoneAttachment" parent="Model/badman_rig/Skeleton" index="0"]
-transform = Transform( -4.47071e-08, -0.00528584, 0.999986, 1, -0.000826117, -4.3232e-06, 0.000826101, 0.999986, 0.00528584, -1.31291, 3.78301, 1.09037 )
+transform = Transform( -4.58713e-08, -0.00528584, 0.999986, 1, -0.000826117, -4.32204e-06, 0.000826101, 0.999986, 0.00528584, -1.31291, 3.78301, 1.09037 )
 bone_name = "hand.r"
 
 [node name="badman" parent="Model/badman_rig/Skeleton" index="1"]

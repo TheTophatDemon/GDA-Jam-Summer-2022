@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "KinematicBody",
 "class": "Actor",
 "language": "GDScript",
-"path": "res://scripts/actor.gd"
+"path": "res://scripts/ai/actor.gd"
 }, {
 "base": "KinematicBody",
 "class": "Enemy",
@@ -22,12 +22,17 @@ _global_script_classes=[ {
 "base": "KinematicBody",
 "class": "Player",
 "language": "GDScript",
-"path": "res://scripts/player.gd"
+"path": "res://scripts/ai/player.gd"
 }, {
 "base": "Area",
 "class": "Shot",
 "language": "GDScript",
 "path": "res://scripts/shot.gd"
+}, {
+"base": "Node",
+"class": "Team",
+"language": "GDScript",
+"path": "res://scripts/team.gd"
 }, {
 "base": "Node",
 "class": "TurnControl",
@@ -39,6 +44,7 @@ _global_script_class_icons={
 "Enemy": "",
 "Player": "",
 "Shot": "",
+"Team": "",
 "TurnControl": ""
 }
 

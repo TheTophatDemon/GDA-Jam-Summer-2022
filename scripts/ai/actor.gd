@@ -2,11 +2,12 @@ extends KinematicBody
 class_name Actor
 
 signal hurt(perpetrator)
-signal die(actor)
+signal die(actor) #Played BEFORE the death animation
+signal dead() #Played AFTER the death animation
 signal shoot(shot, actor)
 
 onready var anim:AnimationPlayer = $Model/AnimationPlayer
-onready var turn_control = get_tree().root.get_node("world/%TurnControl")
+onready var turn_control = get_node("/root/World/%TurnControl")
 onready var label:Label3D = $Label3D
 onready var player_ui:Control = $PlayerUI
 onready var stamina_bar:TextureProgress = $PlayerUI/StaminaBar
@@ -17,12 +18,13 @@ var friction = 20.0
 var gravity = 50.0
 var snap_vec = Vector3(0.0, -6.0, 0.0)
 var velocity:Vector3
+
 var rotation_target = Vector3.FORWARD #Unit vector
 var facing_direction = Vector3.FORWARD
 var turn_speed = 20.0
+
 var max_movement_time:float = 5.0
 var movement_time:float = max_movement_time
-
 var move_input:Vector2 = Vector2.ZERO #Unit vector set by child classes to move the actor
 
 var actions_per_turn = 1
@@ -32,8 +34,7 @@ var label_clear_timer:float = 0.0 #When set above zero, counts down and will cle
 
 export var max_health:int = 3
 onready var health:int = max_health
-var hit_cooldown:float = 3.0
-var hit_timer:float = 0.0
+var hit:bool = false #Has the actor been damaged this turn?
 var died = false
 
 var acting = false
@@ -45,30 +46,26 @@ func start_acting():
 func stop_acting():
 	acting = false
 	player_ui.visible = true
+	
+func expend_action(amount:int = 1):
+	actions_left = max(0, actions_left - amount)
 
 func activate():
-	if not died:
-		actions_left = actions_per_turn
-		movement_time = max_movement_time
-		active = true
-		player_ui.visible = true
+	actions_left = actions_per_turn
+	movement_time = max_movement_time
+	active = true
+	player_ui.visible = true
 	
 func deactivate():
 	active = false
 	player_ui.visible = false
-	
-func _on_shot_hit(shot:Shot):
-	if shot.shooter != self: 
-		var _succ = hurt(1, shot.shooter)
+	hit = false
 	
 func hurt(damage:int, perpetrator:Spatial)->bool:
-	if hit_timer <= 0.0 and not died:
+	if not hit:
 		emit_signal("hurt", perpetrator)
-		health -= damage
-		hit_timer = hit_cooldown
-		if health <= 0:
-			health = 0
-			die()
+		health = int(max(0, health - damage))
+		hit = true
 		show_health_stat()
 		return true
 	return false
@@ -89,13 +86,17 @@ func show_health_stat():
 	label.text = "HP [%s]" % bars
 	label.modulate = Color.red
 	label_clear_timer = 3.0
-	
-func _on_turn_activate(actor:Actor):
-	if actor.name != name:
-		deactivate()
-
-func _on_turn_switch(_actor):
+		
+func _on_start_turn(_team, actor:Actor):
+	if actor == self:
+		activate()
+		
+func _on_end_turn(_team, _actor):
 	deactivate()
+
+func _on_shot_hit(shot:Shot):
+	if shot.shooter != self: 
+		var _succ = hurt(1, shot.shooter)
 
 func _ready():
 	facing_direction = global_transform.basis * Vector3.FORWARD
@@ -106,13 +107,10 @@ func _ready():
 	stamina_bar.min_value = 0.0
 	stamina_bar.value = movement_time
 	
-	var _err
-	_err = turn_control.connect("activate_player", self, "_on_turn_activate")
-	_err = turn_control.connect("activate_enemy", self, "_on_turn_activate")
-	_err = turn_control.connect("turn_switch", self, "_on_turn_switch")
-
-func expend_action(amount:int = 1):
-	actions_left = max(0, actions_left - amount)
+	var err:int = OK
+	err += turn_control.connect("end_turn", self, "_on_end_turn")
+	err += turn_control.connect("start_turn", self, "_on_start_turn")
+	if err != OK: printerr("!!! Signal error in actor.gd")
 
 func _physics_process(delta):
 	if not died and active:
@@ -137,9 +135,6 @@ func _physics_process(delta):
 	var _moved = move_and_slide_with_snap(velocity, snap_vec, Vector3.UP, true)
 	
 func _process(delta):
-	if hit_timer > 0.0:
-		hit_timer = max(0.0, hit_timer - delta)
-	
 	#Update stamina
 	stamina_bar.value = movement_time
 	

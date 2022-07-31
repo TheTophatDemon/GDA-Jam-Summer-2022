@@ -1,8 +1,8 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://gfx/models/billboard_particle.tres" type="QuadMesh" id=1]
+[ext_resource path="res://sound/explosion.mp3" type="AudioStream" id=1]
 [ext_resource path="res://scripts/explosion.gd" type="Script" id=2]
-[ext_resource path="res://sound/explosion.mp3" type="AudioStream" id=3]
+[ext_resource path="res://gfx/models/billboard_particle.tres" type="QuadMesh" id=3]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.0114943, 1 )
@@ -58,7 +58,7 @@ one_shot = true
 explosiveness = 1.0
 visibility_aabb = AABB( -100, -100, -100, 200, 200, 200 )
 process_material = SubResource( 7 )
-draw_pass_1 = ExtResource( 1 )
+draw_pass_1 = ExtResource( 3 )
 script = ExtResource( 2 )
 
 [node name="Smoke" type="Particles" parent="."]
@@ -67,10 +67,10 @@ one_shot = true
 explosiveness = 1.0
 visibility_aabb = AABB( -23.0483, -17.6096, -26.0446, 46.0966, 35.2191, 52.0892 )
 process_material = SubResource( 10 )
-draw_pass_1 = ExtResource( 1 )
+draw_pass_1 = ExtResource( 3 )
 script = ExtResource( 2 )
 
 [node name="Sound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
+stream = ExtResource( 1 )
 volume_db = -2.419
 autoplay = true

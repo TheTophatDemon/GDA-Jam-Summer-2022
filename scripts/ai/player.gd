@@ -1,4 +1,4 @@
-extends "res://scripts/actor.gd"
+extends "res://scripts/ai/actor.gd"
 class_name Player
 
 var aiming:bool = false
@@ -6,6 +6,10 @@ var aiming:bool = false
 func _ready():
 	anim.set_blend_time("walk-loop", "battle_stance-loop", 0.5)
 	anim.set_blend_time("battle_stance-loop", "walk-loop", 0.25)
+	
+	var err:int = OK
+	err += anim.connect("animation_finished", self, "_on_animation_finished")
+	if err: printerr("!!! Signal error in player.gd")
 	
 func hurt(damage:int, perpetrator:Spatial)->bool:
 	var h = .hurt(damage, perpetrator)
@@ -15,10 +19,12 @@ func hurt(damage:int, perpetrator:Spatial)->bool:
 	
 func die():
 	.die()
-	var dead_players = get_node("/root/world/%DeadPlayers")
-	get_parent().remove_child(self)
-	dead_players.add_child(self)
 	anim.play("die")
+	
+func _on_animation_finished(anim_name:String):
+	match anim_name:
+		"die":
+			emit_signal("dead")
 	
 func _process(_delta):
 	if active:

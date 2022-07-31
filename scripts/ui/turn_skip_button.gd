@@ -1,6 +1,6 @@
 extends TextureButton
 
-onready var turn_control = get_tree().root.get_node("world/%TurnControl")
+onready var turn_control = get_tree().root.get_node("/root/World/%TurnControl")
 onready var border = $Border
 
 export var hold_time = 1.0

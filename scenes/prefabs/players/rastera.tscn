@@ -52,7 +52,7 @@ script = ExtResource( 7 )
 material/0 = ExtResource( 3 )
 
 [node name="ThrowPoint" type="BoneAttachment" parent="Model/rastera_rig/Skeleton" index="1"]
-transform = Transform( -0.327994, -0.0415922, 0.943763, 0.939985, 0.0851021, 0.330432, -0.0940597, 0.995504, 0.011183, -0.612455, 5.00744, 2.35728 )
+transform = Transform( -0.236557, -0.910383, 0.339475, 0.950378, -0.289459, -0.113998, 0.202046, 0.295662, 0.933681, -1.74423, 3.78538, -0.538737 )
 bone_name = "hand.r"
 
 [node name="Label3D" parent="." index="3"]
@@ -84,7 +84,6 @@ margin_top = -133.0
 margin_right = -64.0
 margin_bottom = -69.0
 rect_scale = Vector2( 2, 2 )
-disabled = true
 texture_normal = ExtResource( 12 )
 texture_pressed = ExtResource( 11 )
 
@@ -99,7 +98,6 @@ margin_top = -134.0
 margin_right = 4.0
 margin_bottom = -70.0
 rect_scale = Vector2( 2, 2 )
-disabled = true
 texture_normal = ExtResource( 10 )
 texture_pressed = ExtResource( 9 )
 texture_disabled = ExtResource( 8 )
@@ -107,8 +105,8 @@ texture_disabled = ExtResource( 8 )
 [node name="AimTrail" type="Particles" parent="." index="5"]
 transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.0238029, 5.0494, 3.30977 )
 emitting = false
-amount = 32
-lifetime = 16.21
+amount = 16
+lifetime = 4.0
 preprocess = 5.0
 visibility_aabb = AABB( -12.4312, -19.5301, -13.6826, 24.8625, 39.0954, 26.9727 )
 process_material = SubResource( 1 )

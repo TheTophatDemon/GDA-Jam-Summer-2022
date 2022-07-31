@@ -7,7 +7,7 @@
 [ext_resource path="res://gfx/ui/flame_butt.png" type="Texture" id=5]
 [ext_resource path="res://scripts/ai/dilan_attacks.gd" type="Script" id=6]
 [ext_resource path="res://gfx/ui/flame_butt_disable.png" type="Texture" id=7]
-[ext_resource path="res://scenes/prefabs/flame_effect.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/prefabs/effects/flame_effect.tscn" type="PackedScene" id=8]
 [ext_resource path="res://sound/flamethrower.wav" type="AudioStream" id=9]
 
 [node name="Dilan" instance=ExtResource( 1 )]
@@ -15,13 +15,16 @@
 [node name="DilanAttacks" type="Node" parent="." index="0"]
 script = ExtResource( 6 )
 
-[node name="Model" parent="." index="1" groups=["players"] instance=ExtResource( 2 )]
+[node name="Model" parent="." index="1" instance=ExtResource( 2 )]
+
+[node name="Skeleton" parent="Model/dilan_rig" index="0"]
+bones/8/bound_children = [ NodePath("FlameAttach") ]
 
 [node name="dilan" parent="Model/dilan_rig/Skeleton" index="0"]
 material/0 = ExtResource( 3 )
 
 [node name="FlameAttach" type="BoneAttachment" parent="Model/dilan_rig/Skeleton" index="1"]
-transform = Transform( -2.50861, 0.0862923, 0.0223017, -0.0223149, 1.19695e-06, -2.51009, -0.0862889, -2.5087, 0.000766068, -0.955844, 4.37522, 0.869813 )
+transform = Transform( -0.99996, 0, 0.00888971, 0, -1, 0, 0.00888971, 0, 0.99996, 0.00959323, 4.83124, 0.0250694 )
 bone_name = "flamethrower"
 
 [node name="FlameHole" type="Spatial" parent="Model/dilan_rig/Skeleton/FlameAttach" index="0"]
