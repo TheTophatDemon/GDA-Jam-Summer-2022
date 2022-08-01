@@ -4,7 +4,7 @@
 [ext_resource path="res://scripts/hazard_area.gd" type="Script" id=2]
 
 [sub_resource type="SphereShape" id=8]
-radius = 1.6081
+radius = 1.1911
 
 [sub_resource type="SphereShape" id=9]
 radius = 0.789293
@@ -54,11 +54,11 @@ material = SubResource( 2 )
 [node name="FlameEffect" type="Area"]
 transform = Transform( 2.51, 0, 0, 0, 2.51, 0, 0, 0, 2.51, 0, 0, 0 )
 collision_layer = 32
-collision_mask = 12
+collision_mask = 28
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.23829 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.55803 )
 shape = SubResource( 8 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="."]

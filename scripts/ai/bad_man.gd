@@ -15,7 +15,7 @@ onready var cast2 = get_node("Cast2")
 onready var cast3 = get_node("Cast3")
 onready var smoke_fx = $Smoke
 
-enum Action { PURSUE, ATTACK }
+enum Action { PURSUE, ATTACK, SHRUG }
 var action = Action.PURSUE
 
 var target_player:Spatial = null
@@ -130,6 +130,13 @@ func _process(delta):
 					
 				if movement_time <= 0.0:
 					turn_control.skip_turn()
+			Action.SHRUG:
+				if anim.current_animation != "shrug":
+					anim.play("shrug")
+					yield(anim, "animation_finished")
+					turn_control.skip_turn()
+				var vec_to_camera = (get_viewport().get_camera().global_transform.origin - global_transform.origin).normalized()
+				rotation_target = Vector3(vec_to_camera.x, 0.0, vec_to_camera.z)
 	elif not died:
 		if anim.current_animation != "die": anim.play("battle_stance-loop")
 	
@@ -149,13 +156,17 @@ func _physics_process(_delta):
 				if not nav.is_target_reached() and not in_sight:
 					#Move where the nav tells us to
 					var next_pos = nav.get_next_location()
-					var vel_to_pos = (next_pos - global_transform.origin)
-					if vel_to_pos.length() >= nav.path_desired_distance:
-						if nav.avoidance_enabled:
-							nav.set_velocity(vel_to_pos)
-						else:
-							_on_velocity_computed(vel_to_pos)
-					rotation_target = Vector3(vel_to_pos.x, 0.0, vel_to_pos.z)
+					if not nav.is_target_reachable() and next_pos == nav.get_final_location():
+						_on_velocity_computed(Vector3.ZERO)
+						action = Action.SHRUG
+					else:
+						var vel_to_pos = (next_pos - global_transform.origin)
+						if vel_to_pos.length() >= nav.path_desired_distance:
+							if nav.avoidance_enabled:
+								nav.set_velocity(vel_to_pos)
+							else:
+								_on_velocity_computed(vel_to_pos)
+						rotation_target = Vector3(vel_to_pos.x, 0.0, vel_to_pos.z)
 				else: #When in range of the target
 					if nav.avoidance_enabled:
 						nav.set_velocity(Vector3.ZERO)
@@ -167,3 +178,5 @@ func _physics_process(_delta):
 						turn_control.skip_turn()
 			Action.ATTACK:
 				pass
+			Action.SHRUG:
+				move_input = Vector2.ZERO
