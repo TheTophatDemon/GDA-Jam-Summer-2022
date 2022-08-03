@@ -22,8 +22,7 @@ mesh_path = NodePath("Model/Cube")
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.00212, 0 )
 shape = SubResource( 3 )
 
-[node name="Model" type="Spatial" parent="." instance=ExtResource( 2 )]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
+[node name="Model" parent="." instance=ExtResource( 2 )]
 
 [node name="Area" type="Area" parent="."]
 collision_layer = 17

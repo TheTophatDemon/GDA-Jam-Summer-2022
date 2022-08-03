@@ -1,8 +1,6 @@
 extends "res://scripts/ai/actor.gd"
 class_name Enemy
 
-const CAST_OFFSET = Vector3(0.0, 1.0, 0.0)
-
 const SHOT_PREFAB = preload("res://scenes/prefabs/attacks/lazer_shot.tscn")
 const EXPLOSION_PREFAB = preload("res://scenes/prefabs/effects/explosion_effect.tscn")
 const GIBS_PREFAB = preload("res://gfx/models/characters/bad_man_gibs.glb")
@@ -22,6 +20,9 @@ var target_player:Spatial = null
 var attack_timer:float = 0.0
 
 var shoot_range = 25.0
+
+var step_speed = 0.5
+var step_timer = 0.0
 
 func _ready():
 	anim.set_blend_time("walk-loop", "battle_stance-loop", 0.5)
@@ -75,11 +76,14 @@ func hurt(damage:int, perpetrator:Spatial)->bool:
 	var h = .hurt(damage, perpetrator)
 	if h and not died:
 		anim.play("die")
+		$PainSounds.get_child(randi() % $PainSounds.get_child_count()).play()
+		$SoundShock.play()
 	return h
 	
 func die():
 	.die()
 	anim.play("die")
+	$SoundDie.play()
 	
 func shoot():
 	var shot = SHOT_PREFAB.instance()
@@ -133,12 +137,23 @@ func _process(delta):
 			Action.SHRUG:
 				if anim.current_animation != "shrug":
 					anim.play("shrug")
+					$SoundConfused.play()
 					yield(anim, "animation_finished")
 					turn_control.skip_turn()
 				var vec_to_camera = (get_viewport().get_camera().global_transform.origin - global_transform.origin).normalized()
 				rotation_target = Vector3(vec_to_camera.x, 0.0, vec_to_camera.z)
 	elif not died:
 		if anim.current_animation != "die": anim.play("battle_stance-loop")
+	
+	#Footstep sounds
+	if anim.current_animation == "walk-loop":
+		step_timer -= delta
+		if step_timer <= 0.0:
+			step_timer = step_speed
+			$SoundStep.pitch_scale = 1.0 + (randf() * 0.25 - 0.125)
+			$SoundStep.play()
+	else:
+		step_timer = 0.0
 	
 func _physics_process(_delta):
 	if active:

@@ -8,6 +8,7 @@ const LAYER_BIT_HAZARDS = 1 << 5
 
 const GROUP_NAVMESH = "navmesh"
 const GROUP_PROJECTILES = "projectiles"
+const GROUP_KILLABLE = "killable"
 
 func print_err(err:int):
 	print("!!! Function returned error: ", err)

@@ -6,6 +6,7 @@ export var move_speed = 20.0
 
 var shooter:Node = null
 var dying = false
+var timer:float = 0.0
 
 func _ready():
 	var _err
@@ -20,7 +21,10 @@ func _on_body_entered(body:Node):
 func _process(delta):
 	rotate_object_local(Vector3.FORWARD, rotate_speed * delta)
 	translate_object_local(Vector3.FORWARD * move_speed * delta)
-	if dying:
+	timer += delta
+	if dying or timer > 5.0:
 		scale_object_local(Vector3(1.0, 1.0, 0.8))
 		if scale.z < 0.1:
+			if get_node_or_null("AudioStreamPlayer") != null and $AudioStreamPlayer.playing:
+				yield($AudioStreamPlayer, "finished")
 			queue_free()

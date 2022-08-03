@@ -48,6 +48,7 @@ func _on_knife_button_press():
 	actor.start_acting()
 	
 	yield(get_tree().create_timer(0.6), "timeout")
+	$SwingSound.play()
 	var dagger = DAGGER_PREFAB.instance()
 	get_node("/root/World").add_child(dagger)
 	dagger.look_at_from_position(throw_point.global_transform.origin, \

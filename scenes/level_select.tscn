@@ -1,0 +1,151 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://scripts/ui/scenario_button.gd" type="Script" id=1]
+[ext_resource path="res://scenes/battle2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/battle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://gfx/ui/ads/war_priest.png" type="Texture" id=4]
+[ext_resource path="res://gfx/ui/ads/loading.png" type="Texture" id=5]
+[ext_resource path="res://scripts/ui/ad_butler.gd" type="Script" id=6]
+[ext_resource path="res://gfx/ui/ads/anime_melons.png" type="Texture" id=7]
+[ext_resource path="res://gfx/ui/ads/eggman_clickbait.png" type="Texture" id=8]
+[ext_resource path="res://gfx/ui/ads/fly_to_siberia.png" type="Texture" id=9]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "load"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 0.144, 0.267, 0.383, 0.514, 0.631, 0.757, 0.865, 1.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Scenario1" type="Button" parent="."]
+margin_left = 425.0
+margin_top = 84.0
+margin_right = 616.0
+margin_bottom = 119.0
+text = "Scenario 1"
+script = ExtResource( 1 )
+destination = ExtResource( 3 )
+
+[node name="Scenario2" type="Button" parent="."]
+margin_left = 424.0
+margin_top = 150.0
+margin_right = 615.0
+margin_bottom = 185.0
+text = "Scenario 2"
+script = ExtResource( 1 )
+destination = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 237.0
+margin_top = 331.0
+margin_right = 798.0
+margin_bottom = 593.0
+color = Color( 0.431373, 0.431373, 0.431373, 1 )
+script = ExtResource( 6 )
+
+[node name="Ads" type="Control" parent="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="WarPriestAd" type="TextureRect" parent="ColorRect/Ads"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+expand = true
+
+[node name="AnimeMelons" type="TextureRect" parent="ColorRect/Ads"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 7 )
+expand = true
+
+[node name="EggmanClickbait" type="TextureRect" parent="ColorRect/Ads"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 8 )
+expand = true
+
+[node name="Siberia" type="TextureRect" parent="ColorRect/Ads"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 9 )
+expand = true
+
+[node name="Label" type="Label" parent="ColorRect"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -48.5
+margin_top = -31.0
+margin_right = 46.5
+margin_bottom = -17.0
+text = "Advertisement"
+
+[node name="Loading" type="TextureProgress" parent="ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -63.5
+margin_top = -61.0
+margin_right = 64.5
+margin_bottom = 67.0
+max_value = 1.0
+step = 0.0
+texture_progress = ExtResource( 5 )
+fill_mode = 4
+radial_initial_angle = 16.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect/Loading"]
+anims/RESET = SubResource( 1 )
+anims/load = SubResource( 2 )

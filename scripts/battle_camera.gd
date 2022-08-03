@@ -37,6 +37,7 @@ func _on_actor_hurt(_perpetrator, actor):
 
 func _on_turn_transition(_team, actor:Spatial):
 	set_target(actor)
+	temp_target_path = ""
 
 func set_target(node:Spatial):
 	if is_instance_valid(node): target_path = get_path_to(node)

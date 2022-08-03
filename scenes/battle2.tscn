@@ -1,0 +1,139 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://gfx/ui/timer_overlay.png" type="Texture" id=1]
+[ext_resource path="res://scenes/prefabs/players/dilan.tscn" type="PackedScene" id=2]
+[ext_resource path="res://gfx/models/battlefields/computer_room.glb" type="PackedScene" id=3]
+[ext_resource path="res://scripts/regen_navmesh.gd" type="Script" id=4]
+[ext_resource path="res://scripts/battle_camera.gd" type="Script" id=5]
+[ext_resource path="res://scenes/prefabs/players/ray.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scripts/turn_control.gd" type="Script" id=7]
+[ext_resource path="res://scenes/prefabs/props/Cart.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scripts/ui/countdown.gd" type="Script" id=9]
+[ext_resource path="res://gfx/ui/timer_fill.png" type="Texture" id=10]
+[ext_resource path="res://gfx/ui/timer_back.png" type="Texture" id=11]
+[ext_resource path="res://scenes/prefabs/enemies/bad_man.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scripts/ui/turn_timer.gd" type="Script" id=13]
+[ext_resource path="res://scripts/team.gd" type="Script" id=14]
+[ext_resource path="res://scenes/prefabs/prop.tscn" type="PackedScene" id=15]
+[ext_resource path="res://sound/music/fight_fighters.ogg" type="AudioStream" id=16]
+[ext_resource path="res://gfx/fonts/stencil.ttf" type="DynamicFontData" id=18]
+[ext_resource path="res://scenes/prefabs/players/rastera.tscn" type="PackedScene" id=19]
+
+[sub_resource type="NavigationMesh" id=4]
+geometry_collision_mask = 4294967290
+geometry_source_geometry_mode = 1
+agent_radius = 1.8
+
+[sub_resource type="DynamicFont" id=7]
+size = 48
+font_data = ExtResource( 18 )
+
+[sub_resource type="Environment" id=6]
+background_mode = 1
+ambient_light_color = Color( 0.501961, 0.501961, 0.501961, 1 )
+fog_enabled = true
+fog_depth_begin = 50.0
+
+[node name="World" type="Spatial"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 27.645, 28.264, 24.506 )
+current = true
+script = ExtResource( 5 )
+
+[node name="NavMesh" type="NavigationMeshInstance" parent="." groups=["navmesh"]]
+navmesh = SubResource( 4 )
+script = ExtResource( 4 )
+
+[node name="dynatable" parent="NavMesh" instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1878, -0.0319207, -0.889637 )
+
+[node name="Cart" parent="NavMesh" instance=ExtResource( 8 )]
+
+[node name="dynatable2" parent="NavMesh" instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.92013, -0.0319207, 20.8314 )
+
+[node name="dynatable3" parent="NavMesh" instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.8598, -0.0319207, 25.5605 )
+
+[node name="computer_room" parent="NavMesh" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 20.8661, -3.8147e-06, 23.515 )
+
+[node name="TurnControl" type="Spatial" parent="."]
+unique_name_in_owner = true
+script = ExtResource( 7 )
+
+[node name="Countdown" type="Label" parent="TurnControl"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -76.0
+margin_top = 42.0
+margin_right = 76.0
+margin_bottom = 91.0
+custom_fonts/font = SubResource( 7 )
+text = "READY"
+align = 1
+script = ExtResource( 9 )
+
+[node name="Timer" type="Timer" parent="TurnControl/Countdown"]
+wait_time = 2.0
+one_shot = true
+
+[node name="TurnTime" type="TextureProgress" parent="TurnControl"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 80.0
+margin_bottom = 80.0
+rect_scale = Vector2( 2, 2 )
+max_value = 1.0
+step = 0.0
+texture_under = ExtResource( 10 )
+texture_over = ExtResource( 1 )
+texture_progress = ExtResource( 11 )
+fill_mode = 4
+script = ExtResource( 13 )
+
+[node name="Timer" type="Timer" parent="TurnControl/TurnTime"]
+wait_time = 30.0
+one_shot = true
+
+[node name="Teams" type="Spatial" parent="TurnControl"]
+
+[node name="PlayerTeam" type="Spatial" parent="TurnControl/Teams"]
+unique_name_in_owner = true
+script = ExtResource( 14 )
+
+[node name="Ray" parent="TurnControl/Teams/PlayerTeam" instance=ExtResource( 6 )]
+transform = Transform( -0.907873, 0, -0.419246, 0, 1, 0, 0.419246, 0, -0.907873, 16.1749, 0, 20.7798 )
+
+[node name="Dilan" parent="TurnControl/Teams/PlayerTeam" instance=ExtResource( 2 )]
+transform = Transform( -0.820491, 0, -0.571659, 0, 1, 0, 0.571659, 0, -0.820491, 20.0181, -3.8147e-06, -15.5795 )
+
+[node name="Rastera" parent="TurnControl/Teams/PlayerTeam" instance=ExtResource( 19 )]
+transform = Transform( 0.915403, 0, -0.402539, 0, 1, 0, 0.402539, 0, 0.915403, -15.7747, 7.59945, -23.1678 )
+
+[node name="EnemyTeam" type="Spatial" parent="TurnControl/Teams"]
+unique_name_in_owner = true
+script = ExtResource( 14 )
+
+[node name="Bad Man" parent="TurnControl/Teams/EnemyTeam" instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -59.7347, 0, -83.734 )
+
+[node name="Bad Man2" parent="TurnControl/Teams/EnemyTeam" instance=ExtResource( 12 )]
+transform = Transform( 0.837728, 0, 0.546087, 0, 1, 0, -0.546087, 0, 0.837728, -6.25357, -2.86102e-06, -58.4175 )
+
+[node name="Bad Man3" parent="TurnControl/Teams/EnemyTeam" instance=ExtResource( 12 )]
+transform = Transform( 0.383393, 0, 0.923585, 0, 1, 0, -0.923585, 0, 0.383393, -26.3222, 9.53674e-07, -36.1041 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 6 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.944891, 0.109538, -0.308518, 0.195044, 0.568523, 0.799211, 0.262944, -0.815342, 0.515828, 0, 0, 0 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+autoplay = true
+bus = "Music"
+
+[editable path="NavMesh/computer_room"]

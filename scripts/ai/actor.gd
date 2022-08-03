@@ -6,11 +6,11 @@ signal die(actor) #Played BEFORE the death animation
 signal dead() #Played AFTER the death animation
 signal shoot(shot, actor)
 
-onready var anim:AnimationPlayer = $Model/AnimationPlayer
+onready var anim:AnimationPlayer = get_node_or_null("Model/AnimationPlayer")
 onready var turn_control = get_node("/root/World/%TurnControl")
 onready var label:Label3D = $Label3D
 onready var player_ui:Control = $PlayerUI
-onready var stamina_bar:TextureProgress = $PlayerUI/StaminaBar
+onready var stamina_bar:TextureProgress = get_node_or_null("PlayerUI/StaminaBar")
 
 var active:bool = false
 var max_move_speed:float = 10.0
@@ -23,7 +23,7 @@ var rotation_target = Vector3.FORWARD #Unit vector
 var facing_direction = Vector3.FORWARD
 var turn_speed = 20.0
 
-var max_movement_time:float = 5.0
+export var max_movement_time:float = 5.0
 var movement_time:float = max_movement_time
 var move_input:Vector2 = Vector2.ZERO #Unit vector set by child classes to move the actor
 
@@ -73,6 +73,7 @@ func hurt(damage:int, perpetrator:Spatial)->bool:
 func die():
 	active = false
 	died = true
+	remove_from_group(Globals.GROUP_KILLABLE)
 	emit_signal("die", self)
 	if get_node_or_null("CollisionShape") != null:
 		remove_child($CollisionShape)
@@ -103,9 +104,10 @@ func _ready():
 	rotation_target = facing_direction
 	label.text = ""
 	player_ui.visible = false
-	stamina_bar.max_value = max_movement_time
-	stamina_bar.min_value = 0.0
-	stamina_bar.value = movement_time
+	if stamina_bar != null:
+		stamina_bar.max_value = max_movement_time
+		stamina_bar.min_value = 0.0
+		stamina_bar.value = movement_time
 	
 	var err:int = OK
 	err += turn_control.connect("end_turn", self, "_on_end_turn")
@@ -135,8 +137,9 @@ func _physics_process(delta):
 	var _moved = move_and_slide_with_snap(velocity, snap_vec, Vector3.UP, true)
 	
 func _process(delta):
-	#Update stamina
-	stamina_bar.value = movement_time
+	if stamina_bar != null:
+		#Update stamina
+		stamina_bar.value = movement_time
 	
 	#Interpolate rotation
 	var rot_dist = rotation_target.angle_to(facing_direction)

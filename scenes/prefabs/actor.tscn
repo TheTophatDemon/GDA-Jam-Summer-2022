@@ -39,7 +39,7 @@ colors = PoolColorArray( 0.102321, 0.871094, 0.0578461, 1 )
 gradient = SubResource( 7 )
 width = 48
 
-[node name="Actor" type="KinematicBody"]
+[node name="Actor" type="KinematicBody" groups=["killable"]]
 collision_layer = 5
 input_ray_pickable = false
 script = ExtResource( 1 )
@@ -83,7 +83,6 @@ texture_disabled = ExtResource( 8 )
 script = ExtResource( 3 )
 
 [node name="Border" type="TextureRect" parent="PlayerUI/SkipButt"]
-modulate = Color( 0, 0, 0, 1 )
 show_behind_parent = true
 margin_right = 40.0
 margin_bottom = 40.0

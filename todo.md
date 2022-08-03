@@ -8,7 +8,17 @@
 [x] Update actor script for refactor
 [x] Update battle camera script for refactor
 [x] Figure out when to end the turn for AI
-[ ] Ray attack
+[x] Sentry placement
+[x] Sentry destruction
+[ ] Fix placement rotation
+[ ] Sentry attack
+[ ] Sentry renewal (?)
+[ ] Next player indicator
+[ ] Character portraits with current health
+[ ] Show bad men health
+[ ] Player noises
+[ ] Bad Men aim for the head?
+[ ] More ads
 
 # IDEAS
 [ ] Players can shove eachother out of the way

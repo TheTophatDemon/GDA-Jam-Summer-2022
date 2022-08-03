@@ -71,7 +71,12 @@ func skip_turn():
 		_on_turn_timeout()
 
 func start_death_sequence():
-	for team in $Teams.get_children():
-		team.call_deferred("start_death_animations")
-		yield(team, "deaths_processed")
+	for actor in get_tree().get_nodes_in_group(Globals.GROUP_KILLABLE):
+		if actor.health == 0:
+			actor.call_deferred("die")
+			yield(actor, "dead")
+			yield(get_tree().create_timer(2.0), "timeout")
+#	for team in $Teams.get_children():
+#		team.call_deferred("start_death_animations")
+#		yield(team, "deaths_processed")
 	set_state(State.TRANSITION)

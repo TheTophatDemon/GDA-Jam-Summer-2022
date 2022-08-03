@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://gfx/ui/timer_overlay.png" type="Texture" id=1]
 [ext_resource path="res://scenes/prefabs/players/dilan.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://scripts/ui/turn_timer.gd" type="Script" id=13]
 [ext_resource path="res://scripts/team.gd" type="Script" id=14]
 [ext_resource path="res://scenes/prefabs/prop.tscn" type="PackedScene" id=15]
+[ext_resource path="res://sound/music/fight_fighters.ogg" type="AudioStream" id=16]
 [ext_resource path="res://gfx/fonts/stencil.ttf" type="DynamicFontData" id=18]
 [ext_resource path="res://scenes/prefabs/players/rastera.tscn" type="PackedScene" id=19]
 
@@ -59,6 +60,10 @@ shape = SubResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="dynatable" parent="NavMesh" instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.04819, -0.0319207, 25.0361 )
+
+[node name="dynatable2" parent="NavMesh" instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.0932, -0.0319207, 2.87223 )
 
 [node name="vg_lair_battle" parent="NavMesh" instance=ExtResource( 3 )]
 
@@ -113,11 +118,11 @@ one_shot = true
 unique_name_in_owner = true
 script = ExtResource( 14 )
 
-[node name="Dilan" parent="TurnControl/Teams/PlayerTeam" instance=ExtResource( 2 )]
-transform = Transform( -0.820491, 0, -0.571659, 0, 1, 0, 0.571659, 0, -0.820491, 34.7045, -3.8147e-06, 37.617 )
-
 [node name="Ray" parent="TurnControl/Teams/PlayerTeam" instance=ExtResource( 6 )]
 transform = Transform( -0.907873, 0, -0.419246, 0, 1, 0, 0.419246, 0, -0.907873, 18.7941, 0, 35.2419 )
+
+[node name="Dilan" parent="TurnControl/Teams/PlayerTeam" instance=ExtResource( 2 )]
+transform = Transform( -0.820491, 0, -0.571659, 0, 1, 0, 0.571659, 0, -0.820491, 34.7045, -3.8147e-06, 37.617 )
 
 [node name="Rastera" parent="TurnControl/Teams/PlayerTeam" instance=ExtResource( 19 )]
 transform = Transform( 0.915403, 0, -0.402539, 0, 1, 0, 0.402539, 0, 0.915403, 10.6571, 0, 9.69149 )
@@ -128,6 +133,7 @@ script = ExtResource( 14 )
 
 [node name="Bad Man" parent="TurnControl/Teams/EnemyTeam" instance=ExtResource( 12 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.3366, 0, -22.6989 )
+max_health = 1
 
 [node name="Bad Man2" parent="TurnControl/Teams/EnemyTeam" instance=ExtResource( 12 )]
 transform = Transform( 0.383393, 0, 0.923585, 0, 1, 0, -0.923585, 0, 0.383393, -26.7801, 9.53674e-07, 9.29414 )
@@ -137,5 +143,10 @@ environment = SubResource( 6 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.944891, 0.109538, -0.308518, 0.195044, 0.568523, 0.799211, 0.262944, -0.815342, 0.515828, 0, 0, 0 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+autoplay = true
+bus = "Music"
 
 [editable path="NavMesh/vg_lair_battle"]
