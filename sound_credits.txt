@@ -5,6 +5,8 @@ sound/explosion.mp3 by deleted_user_5405837 of freesound.org under CC-BY 3.0
 sound/swing.wav by Taira Komori of freesound.org under Creative Commons Attribution
 "Remix of 115654__jayc66__double_bass_bowed_rucksack" (laser.wav) by Timbre of freesound.org under CC-BY-NC 3.0
 "footstepmixed.mp3" (robostep.wav) modified from SomeAudioGuy of freesound.org under CC-BY 3.0
+"Socket Wrench" by TheGertz of freesound.org CC-BY 3.0
+"drill.flac" by Streety of freesound.org under CC0
 
 CC-BY 3.0:
 https://creativecommons.org/licenses/by/3.0/

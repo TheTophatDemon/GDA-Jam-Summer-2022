@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://scenes/prefabs/actor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gfx/models/characters/ray.glb" type="PackedScene" id=2]
@@ -16,10 +16,75 @@
 [ext_resource path="res://gfx/ui/build_butt_disable.png" type="Texture" id=14]
 [ext_resource path="res://gfx/ui/sentry_butt_disable.png" type="Texture" id=15]
 [ext_resource path="res://sound/place.wav" type="AudioStream" id=16]
+[ext_resource path="res://sound/wrench.wav" type="AudioStream" id=17]
+[ext_resource path="res://gfx/ui/unload_butt.png" type="Texture" id=18]
+[ext_resource path="res://gfx/ui/unload_butt_disable.png" type="Texture" id=19]
+[ext_resource path="res://gfx/ui/unload_butt_press.png" type="Texture" id=20]
+[ext_resource path="res://gfx/materials/unload.tres" type="Material" id=21]
+[ext_resource path="res://sound/drill.wav" type="AudioStream" id=22]
+[ext_resource path="res://sound/voice/ray/what_doing.wav" type="AudioStream" id=23]
 
 [sub_resource type="CylinderShape" id=1]
 height = 6.065
 radius = 4.0
+
+[sub_resource type="PrismMesh" id=2]
+size = Vector3( 2, 2, 0.5 )
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "spin"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 1.33736, 0 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
+}
 
 [node name="Ray" instance=ExtResource( 1 )]
 max_movement_time = 6.0
@@ -41,15 +106,31 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -64.0
-margin_top = -141.0
-margin_bottom = -77.0
+margin_left = -142.0
+margin_top = -142.0
+margin_right = -78.0
+margin_bottom = -78.0
 rect_scale = Vector2( 2, 2 )
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 texture_disabled = ExtResource( 15 )
 
-[node name="BuildButt" type="TextureButton" parent="PlayerUI" index="4"]
+[node name="UnloadButt" type="TextureButton" parent="PlayerUI" index="4"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = -144.0
+margin_right = 70.0
+margin_bottom = -80.0
+rect_scale = Vector2( 2, 2 )
+texture_normal = ExtResource( 18 )
+texture_pressed = ExtResource( 20 )
+texture_disabled = ExtResource( 19 )
+
+[node name="BuildButt" type="TextureButton" parent="PlayerUI" index="5"]
+visible = false
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -63,7 +144,8 @@ texture_normal = ExtResource( 11 )
 texture_pressed = ExtResource( 10 )
 texture_disabled = ExtResource( 14 )
 
-[node name="CancelButt" type="TextureButton" parent="PlayerUI" index="5"]
+[node name="CancelButt" type="TextureButton" parent="PlayerUI" index="6"]
+visible = false
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -80,7 +162,7 @@ texture_pressed = ExtResource( 13 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.144899, 5.46862 )
 visible = false
 collision_layer = 0
-collision_mask = 31
+collision_mask = 30
 monitorable = false
 script = ExtResource( 9 )
 blueprint_material = ExtResource( 8 )
@@ -100,6 +182,32 @@ material_override = ExtResource( 8 )
 [node name="PlaceSound" type="AudioStreamPlayer" parent="." index="6"]
 stream = ExtResource( 16 )
 volume_db = -3.276
+bus = "SFX"
+
+[node name="UnloadSound" type="AudioStreamPlayer" parent="." index="7"]
+stream = ExtResource( 22 )
+pitch_scale = 0.94
+bus = "SFX"
+
+[node name="BuildSound" type="AudioStreamPlayer" parent="." index="8"]
+stream = ExtResource( 17 )
+volume_db = 4.094
+pitch_scale = 0.75
+bus = "SFX"
+
+[node name="UnloadArrow" type="MeshInstance" parent="." index="9"]
+visible = false
+mesh = SubResource( 2 )
+material/0 = ExtResource( 21 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UnloadArrow" index="0"]
+anims/RESET = SubResource( 3 )
+anims/spin = SubResource( 4 )
+
+[node name="BetrayalSound" type="AudioStreamPlayer" parent="." index="10"]
+stream = ExtResource( 23 )
+volume_db = -3.276
+bus = "Vocals"
 
 [editable path="Model"]
 [editable path="SentryPlace/Blueprint"]

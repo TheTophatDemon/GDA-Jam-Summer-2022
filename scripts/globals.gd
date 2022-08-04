@@ -10,5 +10,7 @@ const GROUP_NAVMESH = "navmesh"
 const GROUP_PROJECTILES = "projectiles"
 const GROUP_KILLABLE = "killable"
 
+const NAME_PLAYER_TEAM = "PlayerTeam"
+
 func print_err(err:int):
 	print("!!! Function returned error: ", err)

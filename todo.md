@@ -10,15 +10,15 @@
 [x] Figure out when to end the turn for AI
 [x] Sentry placement
 [x] Sentry destruction
-[ ] Fix placement rotation
-[ ] Sentry attack
-[ ] Sentry renewal (?)
-[ ] Next player indicator
+[x] Fix placement rotation
+[x] Sentry attack
+[x] Sentry renewal (?)
 [ ] Character portraits with current health
+[ ] Next player indicator
 [ ] Show bad men health
 [ ] Player noises
-[ ] Bad Men aim for the head?
 [ ] More ads
+[ ] Scenario 3?
 
 # IDEAS
 [ ] Players can shove eachother out of the way

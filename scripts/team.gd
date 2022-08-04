@@ -9,12 +9,15 @@ var dont_advance:bool = false
 func get_active_idx()->int:
 	return active_idx
 
+func get_next_idx()->int:
+	return (active_idx + 1) % get_child_count()
+
 func advance_active_idx():
 	if dont_advance:
 		active_idx %= get_child_count()
 		dont_advance = false
 	else:
-		active_idx = (active_idx + 1) % get_child_count()
+		active_idx = get_next_idx()
 
 func get_active_actor()->Actor:
 	return get_child(active_idx) as Actor
@@ -26,7 +29,7 @@ func _ready():
 	if err: printerr("!!! Signal error in team ", name)
 	
 func _on_actor_dead(actor:Actor):
-	if actor.get_index() == active_idx:
+	if actor.get_index() == get_next_idx():
 		#This preserves the order of turns even when the next actor is removed from play
 		dont_advance = true
 	#Remove the actor from the team and place it into the world

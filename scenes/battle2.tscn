@@ -50,6 +50,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1878, -0.0319207, -0.889637
 
 [node name="Cart" parent="NavMesh" instance=ExtResource( 8 )]
 
+[node name="Cart2" parent="NavMesh" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.7014, -0.0319207, -15.8429 )
+
+[node name="Cart3" parent="NavMesh" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -44.2191, -0.0319207, -18.8616 )
+
 [node name="dynatable2" parent="NavMesh" instance=ExtResource( 15 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.92013, -0.0319207, 20.8314 )
 
@@ -58,6 +64,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.8598, -0.0319207, 25.5605 
 
 [node name="computer_room" parent="NavMesh" instance=ExtResource( 3 )]
 transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 20.8661, -3.8147e-06, 23.515 )
+
+[node name="StaticBody" parent="NavMesh/computer_room/battlefield" index="0"]
+collision_layer = 3
 
 [node name="TurnControl" type="Spatial" parent="."]
 unique_name_in_owner = true
@@ -103,14 +112,14 @@ one_shot = true
 unique_name_in_owner = true
 script = ExtResource( 14 )
 
-[node name="Ray" parent="TurnControl/Teams/PlayerTeam" instance=ExtResource( 6 )]
-transform = Transform( -0.907873, 0, -0.419246, 0, 1, 0, 0.419246, 0, -0.907873, 16.1749, 0, 20.7798 )
-
 [node name="Dilan" parent="TurnControl/Teams/PlayerTeam" instance=ExtResource( 2 )]
-transform = Transform( -0.820491, 0, -0.571659, 0, 1, 0, 0.571659, 0, -0.820491, 20.0181, -3.8147e-06, -15.5795 )
+transform = Transform( -0.820491, 0, -0.571659, 0, 1, 0, 0.571659, 0, -0.820491, 25.2169, 0.221595, 14.0055 )
 
 [node name="Rastera" parent="TurnControl/Teams/PlayerTeam" instance=ExtResource( 19 )]
-transform = Transform( 0.915403, 0, -0.402539, 0, 1, 0, 0.402539, 0, 0.915403, -15.7747, 7.59945, -23.1678 )
+transform = Transform( 0.915403, 0, -0.402539, 0, 1, 0, 0.402539, 0, 0.915403, -22.1779, 0.538203, 21.7005 )
+
+[node name="Ray" parent="TurnControl/Teams/PlayerTeam" instance=ExtResource( 6 )]
+transform = Transform( -0.907873, 0, -0.419246, 0, 1, 0, 0.419246, 0, -0.907873, 15.2975, 0, 21.1648 )
 
 [node name="EnemyTeam" type="Spatial" parent="TurnControl/Teams"]
 unique_name_in_owner = true

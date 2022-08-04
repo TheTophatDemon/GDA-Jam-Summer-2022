@@ -13,10 +13,10 @@ onready var cast2 = get_node("Cast2")
 onready var cast3 = get_node("Cast3")
 onready var smoke_fx = $Smoke
 
-enum Action { PURSUE, ATTACK, SHRUG }
+enum Action { PURSUE, ATTACK, SHRUG, STUN }
 var action = Action.PURSUE
 
-var target_player:Spatial = null
+var target_actor:Spatial = null
 var attack_timer:float = 0.0
 
 var shoot_range = 25.0
@@ -49,6 +49,8 @@ func _on_animation_start(anim_name:String):
 	match anim_name:
 		"die":
 			smoke_fx.emitting = true
+		_:
+			smoke_fx.emitting = false
 	
 func _on_animation_finish(anim_name:String):
 	match anim_name:
@@ -71,13 +73,20 @@ func _on_animation_finish(anim_name:String):
 				#Delete actor
 				queue_free()
 				emit_signal("dead")
+			elif action == Action.STUN:
+				action = Action.PURSUE
 	
 func hurt(damage:int, perpetrator:Spatial)->bool:
 	var h = .hurt(damage, perpetrator)
-	if h and not died:
+	if h:
 		anim.play("die")
 		$PainSounds.get_child(randi() % $PainSounds.get_child_count()).play()
 		$SoundShock.play()
+		if active:
+			move_input = Vector2.ZERO
+			if perpetrator.health > 0:
+				target_actor = perpetrator
+			action = Action.STUN
 	return h
 	
 func die():
@@ -96,27 +105,29 @@ func shoot():
 	expend_action()
 	yield(shot, "tree_exited")
 	action = Action.PURSUE
+	target_actor = null
 	
 func _process(delta):
 	if active and not died:
-		#Target nearest player
-		var nearest_ply:Spatial = null
-		var nearest_sqdist:float = 100000.0
-		for ply in players.get_children():
-			var d = (ply.global_transform.origin - global_transform.origin).length_squared()
-			if is_instance_valid(ply) and d < nearest_sqdist:
-				nearest_sqdist = d
-				nearest_ply = ply
-		if is_instance_valid(nearest_ply):
-			target_player = nearest_ply
-			if nav.get_target_location() != nearest_ply.global_transform.origin:
-				nav.set_target_location(nearest_ply.global_transform.origin)
-				#action = Action.PURSUE
+		#Target nearest player (unless getting revenge on a sentry)
+		if not is_instance_valid(target_actor) or !(target_actor is Sentry):
+			var nearest_ply:Spatial = null
+			var nearest_sqdist:float = 100000.0
+			for ply in players.get_children():
+				var d = (ply.global_transform.origin - global_transform.origin).length_squared()
+				if is_instance_valid(ply) and d < nearest_sqdist:
+					nearest_sqdist = d
+					nearest_ply = ply
+			if is_instance_valid(nearest_ply):
+				target_actor = nearest_ply
+				if nav.get_target_location() != nearest_ply.global_transform.origin:
+					nav.set_target_location(nearest_ply.global_transform.origin)
+					#action = Action.PURSUE
 		
 		match action:
 			Action.ATTACK:
 				move_input = Vector2.ZERO
-				var target_diff = (target_player.global_transform.origin - global_transform.origin)
+				var target_diff = (target_actor.global_transform.origin - global_transform.origin)
 				rotation_target = Vector3(target_diff.x, 0.0, target_diff.z).normalized()
 				attack_timer += delta
 				if actions_left > 0:
@@ -193,5 +204,5 @@ func _physics_process(_delta):
 						turn_control.skip_turn()
 			Action.ATTACK:
 				pass
-			Action.SHRUG:
+			Action.SHRUG, Action.STUN:
 				move_input = Vector2.ZERO
