@@ -63,9 +63,9 @@ func deactivate():
 	
 func hurt(damage:int, perpetrator:Spatial)->bool:
 	if not hit:
-		emit_signal("hurt", perpetrator)
 		health = int(max(0, health - damage))
 		hit = true
+		emit_signal("hurt", perpetrator)
 		show_health_stat()
 		return true
 	return false

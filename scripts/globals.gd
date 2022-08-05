@@ -11,6 +11,7 @@ const GROUP_PROJECTILES = "projectiles"
 const GROUP_KILLABLE = "killable"
 
 const NAME_PLAYER_TEAM = "PlayerTeam"
+const NAME_ENEMY_TEAM = "EnemyTeam"
 
 func print_err(err:int):
 	print("!!! Function returned error: ", err)

@@ -100,7 +100,7 @@ func _on_unload_butt_pressed():
 	nearest_sentry.queue_free()
 	get_node("../UnloadSound").play()
 
-func _on_start_turn(_team, actor_:Actor):
+func _on_start_turn(_team, _act:Actor):
 	sentry_place.visible = false
 	unload_arrow.visible = false
 

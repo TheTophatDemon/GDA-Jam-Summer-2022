@@ -13,11 +13,11 @@ func _ready():
 	err += connect("body_exited", self, "_on_body_exited")
 	if err: printerr("!!! Signal error in blueprint.gd")
 
-func _on_body_entered(body:CollisionObject):
+func _on_body_entered(_body:CollisionObject):
 	n_intersects += 1
 	blueprint_material.albedo_color = NO_PLACE_COLOR
 
-func _on_body_exited(body:CollisionObject):
+func _on_body_exited(_body:CollisionObject):
 	n_intersects -= 1
 	if n_intersects <= 0:
 		blueprint_material.albedo_color = PLACE_COLOR

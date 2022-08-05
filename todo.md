@@ -13,8 +13,11 @@
 [x] Fix placement rotation
 [x] Sentry attack
 [x] Sentry renewal (?)
-[ ] Character portraits with current health
-[ ] Next player indicator
+[x] Character portraits with current health
+[x] Next player indicator
+[ ] Fix sentry firing at players
+[ ] Fix sentry doing double damage
+[ ] Fix nav target / script target mismatch
 [ ] Show bad men health
 [ ] Player noises
 [ ] More ads
