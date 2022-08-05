@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://scripts/ai/bad_man.gd" type="Script" id=1]
 [ext_resource path="res://gfx/models/characters/bad_man.glb" type="PackedScene" id=2]
@@ -12,6 +12,9 @@
 [ext_resource path="res://sound/voice/badman/ouch.wav" type="AudioStream" id=10]
 [ext_resource path="res://sound/shock.wav" type="AudioStream" id=11]
 [ext_resource path="res://sound/robostep.wav" type="AudioStream" id=12]
+[ext_resource path="res://sound/voice/badman/ready2.wav" type="AudioStream" id=13]
+[ext_resource path="res://sound/voice/badman/i_am_fail.wav" type="AudioStream" id=14]
+[ext_resource path="res://sound/voice/badman/ready.wav" type="AudioStream" id=15]
 
 [sub_resource type="Animation" id=1]
 resource_name = "battle_stance-loop"
@@ -865,7 +868,19 @@ collide_with_areas = true
 debug_shape_custom_color = Color( 1, 1, 1, 1 )
 debug_shape_thickness = 5
 
-[node name="Model" parent="." index="3" instance=ExtResource( 2 )]
+[node name="Cast4" type="RayCast" parent="." index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.674688, 3.75595, 1.49983 )
+enabled = true
+cast_to = Vector3( 0, 0, 15 )
+collision_mask = 31
+collide_with_areas = true
+debug_shape_custom_color = Color( 1, 1, 1, 1 )
+debug_shape_thickness = 5
+
+[node name="Model" parent="." index="4" instance=ExtResource( 2 )]
+
+[node name="Skeleton" parent="Model/badman_rig" index="0"]
+bones/8/bound_children = [ NodePath("Shooter") ]
 
 [node name="Shooter" type="BoneAttachment" parent="Model/badman_rig/Skeleton" index="0"]
 transform = Transform( -4.58713e-08, -0.00528584, 0.999986, 1, -0.000826117, -4.32204e-06, 0.000826101, 0.999986, 0.00528584, -1.31291, 3.78301, 1.09037 )
@@ -883,15 +898,15 @@ anims/twerk-loop = SubResource( 4 )
 anims/walk-loop = SubResource( 5 )
 anims/win-loop = SubResource( 6 )
 
-[node name="Smoke" parent="." index="4" instance=ExtResource( 6 )]
+[node name="Smoke" parent="." index="5" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.06836, 0 )
 emitting = false
 
-[node name="Label3D" parent="." index="6"]
+[node name="Label3D" parent="." index="7"]
 text = ""
 
-[node name="NavigationAgent" type="NavigationAgent" parent="." index="7"]
-target_desired_distance = 10.0
+[node name="NavigationAgent" type="NavigationAgent" parent="." index="8"]
+target_desired_distance = 5.0
 path_max_distance = 5.0
 radius = 2.0
 time_horizon = 3.0
@@ -903,13 +918,8 @@ visible = false
 [node name="MoveRegion" parent="PlayerUI" index="1"]
 visible = false
 
-[node name="SoundConfused" type="AudioStreamPlayer" parent="." index="9"]
+[node name="SoundConfused" type="AudioStreamPlayer" parent="." index="10"]
 stream = ExtResource( 9 )
-bus = "Vocals"
-
-[node name="SoundDie" type="AudioStreamPlayer" parent="." index="10"]
-stream = ExtResource( 8 )
-volume_db = -3.628
 bus = "Vocals"
 
 [node name="SoundShock" type="AudioStreamPlayer" parent="." index="11"]
@@ -921,12 +931,28 @@ bus = "SFX"
 stream = ExtResource( 12 )
 bus = "SFX"
 
-[node name="PainSounds" type="Spatial" parent="." index="13"]
+[node name="Ready" type="AudioStreamPlayer" parent="ReadySounds" index="0"]
+stream = ExtResource( 15 )
+bus = "Vocals"
+
+[node name="Ready2" type="AudioStreamPlayer" parent="ReadySounds" index="1"]
+stream = ExtResource( 13 )
+bus = "Vocals"
 
 [node name="Ouch" type="AudioStreamPlayer" parent="PainSounds" index="0"]
 stream = ExtResource( 10 )
+bus = "Vocals"
 
 [node name="Pain" type="AudioStreamPlayer" parent="PainSounds" index="1"]
 stream = ExtResource( 7 )
+bus = "Vocals"
+
+[node name="SoundDie" type="AudioStreamPlayer" parent="DeathSounds" index="0"]
+stream = ExtResource( 8 )
+bus = "Vocals"
+
+[node name="SoundDie2" type="AudioStreamPlayer" parent="DeathSounds" index="1"]
+stream = ExtResource( 14 )
+bus = "Vocals"
 
 [editable path="Model"]

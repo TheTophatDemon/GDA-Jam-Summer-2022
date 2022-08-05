@@ -137,3 +137,11 @@ margin_top = -61.0
 margin_right = 47.0
 margin_bottom = -13.0
 texture = ExtResource( 10 )
+
+[node name="ReadySounds" type="Node" parent="."]
+
+[node name="PainSounds" type="Node" parent="."]
+
+[node name="DeathSounds" type="Node" parent="."]
+
+[node name="BetrayalSounds" type="Node" parent="."]

@@ -11,15 +11,24 @@ func _ready():
 	err += anim.connect("animation_finished", self, "_on_animation_finished")
 	if err: printerr("!!! Signal error in player.gd")
 	
+func _on_start_turn(team, actor):
+	._on_start_turn(team, actor)
+	if actor == self: play_multisound("ReadySounds")
+	
 func hurt(damage:int, perpetrator:Spatial)->bool:
 	var h = .hurt(damage, perpetrator)
-	if h and not died:
+	if h:
 		anim.play("hurt")
+		if perpetrator.get_parent().name == Globals.NAME_PLAYER_TEAM:
+			play_multisound("BetrayalSounds")
+		else:
+			play_multisound("PainSounds")
 	return h
 	
 func die():
 	.die()
 	anim.play("die")
+	play_multisound("DeathSounds")
 	
 func _on_animation_finished(anim_name:String):
 	match anim_name:

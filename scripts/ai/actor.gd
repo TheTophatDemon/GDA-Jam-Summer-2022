@@ -59,7 +59,6 @@ func activate():
 func deactivate():
 	active = false
 	player_ui.visible = false
-	hit = false
 	
 func hurt(damage:int, perpetrator:Spatial)->bool:
 	if not hit:
@@ -78,7 +77,7 @@ func die():
 	if get_node_or_null("CollisionShape") != null:
 		remove_child($CollisionShape)
 	
-func show_health_stat():
+func show_health_stat(time:float = 3.0):
 	var bars:String = ""
 	for _i in range(health):
 		bars += "♥"
@@ -86,11 +85,12 @@ func show_health_stat():
 		bars += "♡"
 	label.text = "HP [%s]" % bars
 	label.modulate = Color.red
-	label_clear_timer = 3.0
+	label_clear_timer = time
 		
 func _on_start_turn(_team, actor:Actor):
 	if actor == self:
 		activate()
+	hit = false
 		
 func _on_end_turn(_team, _actor):
 	deactivate()
@@ -157,3 +157,8 @@ func _process(delta):
 		if label_clear_timer < 0.0:
 			label_clear_timer = 0.0
 			label.text = ""
+			
+func play_multisound(group_name:String):
+	var group = get_node_or_null(group_name)
+	if group != null and group.get_child_count() > 0:
+		group.get_child(randi() % group.get_child_count()).play()

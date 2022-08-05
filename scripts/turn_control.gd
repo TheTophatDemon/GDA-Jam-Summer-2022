@@ -67,8 +67,14 @@ func _on_turn_timeout():
 #Causes the current turn to end early
 func skip_turn():
 	if state == State.ACTION:
-		turn_timer.stop()
-		_on_turn_timeout()
+		#Turn the timer to one second before timeout, but keep the wait_time the same
+		if turn_timer.time_left > 1.0:
+			var w = turn_timer.wait_time
+			turn_timer.start(1.0)
+			turn_timer.wait_time = w
+		
+		#turn_timer.stop()
+		#_on_turn_timeout()
 
 func start_death_sequence():
 	for actor in get_tree().get_nodes_in_group(Globals.GROUP_KILLABLE):

@@ -15,11 +15,14 @@
 [x] Sentry renewal (?)
 [x] Character portraits with current health
 [x] Next player indicator
-[ ] Fix sentry firing at players
-[ ] Fix sentry doing double damage
-[ ] Fix nav target / script target mismatch
-[ ] Show bad men health
-[ ] Player noises
+[x] Fix sentry firing at players
+[x] Fix sentry doing double damage
+[x] Fix nav target / script target mismatch
+[x] Make sentry more reliably hit things
+[x] Prevent sentries form shooting players after target is acquired.
+[x] Show bad men health
+[x] Fix bad men shooting eachother..?
+[x] Player noises
 [ ] More ads
 [ ] Scenario 3?
 

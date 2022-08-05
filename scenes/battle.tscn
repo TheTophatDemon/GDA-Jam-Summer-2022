@@ -11,7 +11,7 @@
 [sub_resource type="NavigationMesh" id=4]
 geometry_collision_mask = 4294967290
 geometry_source_geometry_mode = 1
-agent_radius = 1.8
+agent_radius = 2.0
 
 [sub_resource type="Environment" id=6]
 background_mode = 1

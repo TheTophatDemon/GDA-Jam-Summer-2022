@@ -11,6 +11,7 @@ onready var shooter:Spatial = $Model/badman_rig/Skeleton/Shooter
 onready var cast1 = get_node("Cast1")
 onready var cast2 = get_node("Cast2")
 onready var cast3 = get_node("Cast3")
+onready var cast4 = get_node("Cast4")
 onready var smoke_fx = $Smoke
 
 enum Action { PURSUE, ATTACK, SHRUG, STUN }
@@ -75,24 +76,28 @@ func _on_animation_finish(anim_name:String):
 				emit_signal("dead")
 			elif action == Action.STUN:
 				action = Action.PURSUE
+				
+func _on_start_turn(team, actor):
+	._on_start_turn(team, actor)
+	if actor == self: play_multisound("ReadySounds")
 	
 func hurt(damage:int, perpetrator:Spatial)->bool:
 	var h = .hurt(damage, perpetrator)
 	if h:
 		anim.play("die")
-		$PainSounds.get_child(randi() % $PainSounds.get_child_count()).play()
+		play_multisound("PainSounds")
 		$SoundShock.play()
 		if active:
 			move_input = Vector2.ZERO
 			if perpetrator.health > 0:
-				target_actor = perpetrator
+				set_target_actor(perpetrator)
 			action = Action.STUN
 	return h
 	
 func die():
 	.die()
 	anim.play("die")
-	$SoundDie.play()
+	play_multisound("DeathSounds")
 	
 func shoot():
 	var shot = SHOT_PREFAB.instance()
@@ -107,6 +112,11 @@ func shoot():
 	action = Action.PURSUE
 	target_actor = null
 	
+func set_target_actor(new_target:Actor):
+	target_actor = new_target
+	if nav.get_target_location() != target_actor.global_transform.origin:
+		nav.set_target_location(target_actor.global_transform.origin)
+	
 func _process(delta):
 	if active and not died:
 		#Target nearest player (unless getting revenge on a sentry)
@@ -119,10 +129,7 @@ func _process(delta):
 					nearest_sqdist = d
 					nearest_ply = ply
 			if is_instance_valid(nearest_ply):
-				target_actor = nearest_ply
-				if nav.get_target_location() != nearest_ply.global_transform.origin:
-					nav.set_target_location(nearest_ply.global_transform.origin)
-					#action = Action.PURSUE
+				set_target_actor(nearest_ply)
 		
 		match action:
 			Action.ATTACK:
@@ -155,6 +162,7 @@ func _process(delta):
 				rotation_target = Vector3(vec_to_camera.x, 0.0, vec_to_camera.z)
 	elif not died:
 		if anim.current_animation != "die": anim.play("battle_stance-loop")
+		show_health_stat(0.5)
 	
 	#Footstep sounds
 	if anim.current_animation == "walk-loop":
@@ -172,14 +180,28 @@ func _physics_process(_delta):
 			Action.PURSUE:
 				#Sight test
 				var in_sight = true
+				#If casts 1,2, and 3 are hitting the player, the shoot.
+				#This ensures that there is room around the gun for the shot to travel
 				for cast in [cast1, cast2, cast3]:
 					if cast.is_colliding():
 						if (cast.get_collider().collision_layer & Globals.LAYER_BIT_PLAYERS) > 0:
-							#print("Hit: " + String(cast.get_collision_point()))
-							continue
+								continue
 					in_sight = false
 					break
-				if not nav.is_target_reached() and not in_sight:
+				#Cast 4 is for close proximity and overrides the other 3
+				if cast4.is_colliding() and \
+					(cast4.get_collider().collision_layer & Globals.LAYER_BIT_PLAYERS) > 0:
+					in_sight = true
+				if nav.is_target_reached() or in_sight: #When in range of the target
+					if nav.avoidance_enabled:
+						nav.set_velocity(Vector3.ZERO)
+					else:
+						_on_velocity_computed(Vector3.ZERO)
+					if actions_left > 0: 
+						action = Action.ATTACK
+					else:
+						turn_control.skip_turn()
+				else:
 					#Move where the nav tells us to
 					var next_pos = nav.get_next_location()
 					if not nav.is_target_reachable() and next_pos == nav.get_final_location():
@@ -193,15 +215,6 @@ func _physics_process(_delta):
 							else:
 								_on_velocity_computed(vel_to_pos)
 						rotation_target = Vector3(vel_to_pos.x, 0.0, vel_to_pos.z)
-				else: #When in range of the target
-					if nav.avoidance_enabled:
-						nav.set_velocity(Vector3.ZERO)
-					else:
-						_on_velocity_computed(Vector3.ZERO)
-					if actions_left > 0: 
-						action = Action.ATTACK
-					else:
-						turn_control.skip_turn()
 			Action.ATTACK:
 				pass
 			Action.SHRUG, Action.STUN:

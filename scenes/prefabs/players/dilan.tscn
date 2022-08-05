@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scenes/prefabs/actor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gfx/models/characters/dilan.glb" type="PackedScene" id=2]
@@ -9,6 +9,13 @@
 [ext_resource path="res://gfx/ui/flame_butt_disable.png" type="Texture" id=7]
 [ext_resource path="res://scenes/prefabs/effects/flame_effect.tscn" type="PackedScene" id=8]
 [ext_resource path="res://sound/flamethrower.wav" type="AudioStream" id=9]
+[ext_resource path="res://sound/voice/dilan/ready2.wav" type="AudioStream" id=10]
+[ext_resource path="res://sound/voice/dilan/die.wav" type="AudioStream" id=11]
+[ext_resource path="res://sound/voice/dilan/hurt2.wav" type="AudioStream" id=12]
+[ext_resource path="res://sound/voice/dilan/betrayal.wav" type="AudioStream" id=13]
+[ext_resource path="res://sound/voice/dilan/ready.wav" type="AudioStream" id=14]
+[ext_resource path="res://sound/voice/dilan/hurt1.wav" type="AudioStream" id=15]
+[ext_resource path="res://sound/voice/dilan/die2.wav" type="AudioStream" id=16]
 
 [node name="Dilan" instance=ExtResource( 1 )]
 max_health = 4
@@ -57,6 +64,34 @@ texture_disabled = ExtResource( 7 )
 
 [node name="FlameSound" type="AudioStreamPlayer" parent="." index="5"]
 stream = ExtResource( 9 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="ReadySounds" index="0"]
+stream = ExtResource( 14 )
+bus = "Vocals"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="ReadySounds" index="1"]
+stream = ExtResource( 10 )
+bus = "Vocals"
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="PainSounds" index="0"]
+stream = ExtResource( 15 )
+bus = "Vocals"
+
+[node name="AudioStreamPlayer4" type="AudioStreamPlayer" parent="PainSounds" index="1"]
+stream = ExtResource( 12 )
+bus = "Vocals"
+
+[node name="AudioStreamPlayer5" type="AudioStreamPlayer" parent="DeathSounds" index="0"]
+stream = ExtResource( 11 )
+bus = "Vocals"
+
+[node name="AudioStreamPlayer6" type="AudioStreamPlayer" parent="DeathSounds" index="1"]
+stream = ExtResource( 16 )
+bus = "Vocals"
+
+[node name="AudioStreamPlayer7" type="AudioStreamPlayer" parent="BetrayalSounds" index="0"]
+stream = ExtResource( 13 )
+bus = "Vocals"
 
 [connection signal="pressed" from="PlayerUI/FlameButt" to="DilanAttacks" method="_flamethrower_activate"]
 

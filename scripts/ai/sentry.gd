@@ -4,7 +4,7 @@ class_name Sentry
 const EXPLOSION_PREFAB = preload("res://scenes/prefabs/effects/explosion_effect.tscn")
 const SHOT_PREFAB = preload("res://scenes/prefabs/attacks/lazer_shot.tscn")
 
-export(float) var spin_speed:float = 3.0
+export(float) var spin_speed:float = 4.0
 
 onready var head:Spatial = $Model/sentry_head
 onready var shooter:RayCast = $Model/sentry_head/Shooter
@@ -17,7 +17,9 @@ var shooting:bool = false
 
 func _ready():
 	shooter.add_exception(self)
-	actions_per_turn = 3
+	
+	for enemy in get_node("/root/World/TurnControl/Teams/" + Globals.NAME_ENEMY_TEAM).get_children():
+		enemy.connect("hurt", self, "_on_target_hit")
 	
 func hurt(damage:int, perpetrator:Spatial)->bool:
 	var h = .hurt(damage, perpetrator)
@@ -36,10 +38,24 @@ func _on_start_turn(team:Team, actor:Actor):
 	if team.name != Globals.NAME_PLAYER_TEAM:
 		#Only target the enemy actively taking its turn
 		activate()
-		target = actor
+		set_target(actor)
 	else:
-		target = null
+		set_target(null)
 		deactivate()
+		
+func set_target(new_target:Actor):
+#	if is_instance_valid(target):
+#			target.disconnect("hurt", self, "_on_target_hit")
+	target = new_target
+#	if is_instance_valid(target) and !target.is_connected("hurt", self, "_on_target_hit"):
+#		target.connect("hurt", self, "_on_target_hit")
+		
+#Stop shooting when an enemy is hit, regardless of whether it's the target or not.
+func _on_target_hit(perp):
+	if perp == self:
+		shooting = false
+		set_target(null)
+		expend_action()
 
 func shoot():
 	var shot = SHOT_PREFAB.instance()
@@ -48,7 +64,6 @@ func shoot():
 	shot.global_transform = shooter.global_transform
 	shot.rotate_y(PI)
 	emit_signal("shoot", shot, self)
-	expend_action()
 
 func _process(delta):
 	if not is_instance_valid(target):
@@ -56,14 +71,14 @@ func _process(delta):
 	if shooting:
 		#Turn to face target
 		head.rotation_target = (target.global_transform.origin - global_transform.origin).normalized()
-		if head.facing_direction == head.rotation_target and actions_left > 0 and shoot_timer <= 0.0:
-			shoot()
+		if head.facing_direction == head.rotation_target and shoot_timer <= 0.0:
+			if shooter.get_collider() == target:
+				shoot()
 			shoot_timer = shoot_interval
-		elif actions_left == 0:
-			shooting = false
 		else:
 			shoot_timer -= delta
 	else:
 		if active and actions_left > 0 and shooter.get_collider() == target:
 			shooting = true
+		#Spin
 		head.rotation_target = Quat(Vector3.UP, spin_speed * delta) * head.rotation_target

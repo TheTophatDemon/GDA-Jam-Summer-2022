@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://scenes/prefabs/actor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gfx/models/characters/ray.glb" type="PackedScene" id=2]
@@ -23,6 +23,11 @@
 [ext_resource path="res://gfx/materials/unload.tres" type="Material" id=21]
 [ext_resource path="res://sound/drill.wav" type="AudioStream" id=22]
 [ext_resource path="res://sound/voice/ray/what_doing.wav" type="AudioStream" id=23]
+[ext_resource path="res://sound/voice/ray/hurt2.wav" type="AudioStream" id=24]
+[ext_resource path="res://sound/voice/ray/hurt1.wav" type="AudioStream" id=25]
+[ext_resource path="res://sound/voice/ray/die.wav" type="AudioStream" id=26]
+[ext_resource path="res://sound/voice/ray/die2.wav" type="AudioStream" id=27]
+[ext_resource path="res://sound/voice/ray/ready.wav" type="AudioStream" id=28]
 
 [sub_resource type="CylinderShape" id=1]
 height = 6.065
@@ -207,6 +212,30 @@ anims/spin = SubResource( 4 )
 [node name="BetrayalSound" type="AudioStreamPlayer" parent="." index="10"]
 stream = ExtResource( 23 )
 volume_db = -3.276
+bus = "Vocals"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="ReadySounds" index="0"]
+stream = ExtResource( 28 )
+bus = "Vocals"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="PainSounds" index="0"]
+stream = ExtResource( 25 )
+bus = "Vocals"
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="PainSounds" index="1"]
+stream = ExtResource( 24 )
+bus = "Vocals"
+
+[node name="AudioStreamPlayer4" type="AudioStreamPlayer" parent="DeathSounds" index="0"]
+stream = ExtResource( 26 )
+bus = "Vocals"
+
+[node name="AudioStreamPlayer5" type="AudioStreamPlayer" parent="DeathSounds" index="1"]
+stream = ExtResource( 27 )
+bus = "Vocals"
+
+[node name="AudioStreamPlayer6" type="AudioStreamPlayer" parent="BetrayalSounds" index="0"]
+stream = ExtResource( 23 )
 bus = "Vocals"
 
 [editable path="Model"]
