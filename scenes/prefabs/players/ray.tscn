@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://scenes/prefabs/actor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gfx/models/characters/ray.glb" type="PackedScene" id=2]
@@ -28,6 +28,7 @@
 [ext_resource path="res://sound/voice/ray/die.wav" type="AudioStream" id=26]
 [ext_resource path="res://sound/voice/ray/die2.wav" type="AudioStream" id=27]
 [ext_resource path="res://sound/voice/ray/ready.wav" type="AudioStream" id=28]
+[ext_resource path="res://sound/voice/ray/ready2.wav" type="AudioStream" id=29]
 
 [sub_resource type="CylinderShape" id=1]
 height = 6.065
@@ -216,6 +217,11 @@ bus = "Vocals"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="ReadySounds" index="0"]
 stream = ExtResource( 28 )
+bus = "Vocals"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="ReadySounds" index="1"]
+stream = ExtResource( 29 )
+volume_db = -2.457
 bus = "Vocals"
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="PainSounds" index="0"]

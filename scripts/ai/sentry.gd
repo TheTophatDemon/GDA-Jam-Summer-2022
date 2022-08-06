@@ -4,7 +4,9 @@ class_name Sentry
 const EXPLOSION_PREFAB = preload("res://scenes/prefabs/effects/explosion_effect.tscn")
 const SHOT_PREFAB = preload("res://scenes/prefabs/attacks/lazer_shot.tscn")
 
+export(String, "EnemyTeam", "PlayerTeam") var target_team:String = Globals.NAME_ENEMY_TEAM
 export(float) var spin_speed:float = 4.0
+export(float) var spin_angle:float = 0.0 #The angle, in degrees, at which the sentry head spins in the other direction
 
 onready var head:Spatial = $Model/sentry_head
 onready var shooter:RayCast = $Model/sentry_head/Shooter
@@ -15,8 +17,12 @@ var shoot_interval:float = 0.5
 var shoot_timer:float = 0.0
 var shooting:bool = false
 
+var original_angle:float = 0.0
+
 func _ready():
 	shooter.add_exception(self)
+	
+	original_angle = rad2deg(global_transform.basis.get_euler().y)
 	
 	for enemy in get_node("/root/World/TurnControl/Teams/" + Globals.NAME_ENEMY_TEAM).get_children():
 		enemy.connect("hurt", self, "_on_target_hit")
@@ -35,7 +41,7 @@ func die():
 	
 func _on_start_turn(team:Team, actor:Actor):
 	shooting = false
-	if team.name != Globals.NAME_PLAYER_TEAM:
+	if team.name == target_team:
 		#Only target the enemy actively taking its turn
 		activate()
 		set_target(actor)
@@ -80,5 +86,16 @@ func _process(delta):
 	else:
 		if active and actions_left > 0 and shooter.get_collider() == target:
 			shooting = true
-		#Spin
-		head.rotation_target = Quat(Vector3.UP, spin_speed * delta) * head.rotation_target
+		if is_zero_approx(spin_angle):
+			#Spin continously
+			head.rotation_target = Quat(Vector3.UP, spin_speed * delta) * head.rotation_target
+		else:
+			if head.facing_direction == head.rotation_target:
+				spin_speed = -spin_speed
+				var a:float = 0.0
+				if spin_speed > 0.0:
+					a = deg2rad(original_angle + spin_angle)
+				else:
+					a = deg2rad(original_angle - spin_angle)
+				head.rotation_target = Vector3(cos(a), 0.0, sin(a))
+				head.turn_speed = spin_speed

@@ -23,8 +23,9 @@
 [x] Show bad men health
 [x] Fix bad men shooting eachother..?
 [x] Player noises
-[ ] More ads
-[ ] Scenario 3?
+[x] Scenario 3?
+[x] More ads
+[ ] Sentries don't fire when right up next to bad man?
 
 # IDEAS
 [ ] Players can shove eachother out of the way

@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://gfx/models/sentry.glb" type="PackedScene" id=1]
+[ext_resource path="res://scripts/ai/sentry.gd" type="Script" id=2]
+[ext_resource path="res://gfx/fonts/DejaVuSans.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://gfx/materials/darker_vertex_color.tres" type="Material" id=4]
+[ext_resource path="res://scripts/looker.gd" type="Script" id=5]
+
+[sub_resource type="CylinderShape" id=8]
+height = 6.7169
+radius = 2.22348
+
+[sub_resource type="DynamicFont" id=9]
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
+[node name="BadSentry" type="KinematicBody" groups=["killable", "navmesh"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.9556, 9.53674e-07, 30.193 )
+collision_layer = 17
+script = ExtResource( 2 )
+max_movement_time = 0.0
+max_health = 1
+target_team = "PlayerTeam"
+spin_speed = 1.0
+spin_angle = 45.0
+
+[node name="Model" parent="." instance=ExtResource( 1 )]
+
+[node name="sentry_base" parent="Model" index="0"]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 3.04976, 0 )
+
+[node name="sentry_head" parent="Model" index="1"]
+material/0 = ExtResource( 4 )
+script = ExtResource( 5 )
+
+[node name="Shooter" type="RayCast" parent="Model/sentry_head" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.10223, 2.62471 )
+enabled = true
+cast_to = Vector3( 0, 0, 50 )
+collision_mask = 14
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.30479, 0 )
+shape = SubResource( 8 )
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.01664, 0 )
+pixel_size = 0.005
+billboard = 1
+double_sided = false
+no_depth_test = true
+fixed_size = true
+modulate = Color( 1, 0, 0, 1 )
+text = "HP [♥♥♡]"
+font = SubResource( 9 )
+
+[node name="PlayerUI" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[editable path="Model"]

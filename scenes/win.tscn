@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://gfx/models/characters/bad_man.glb" type="PackedScene" id=1]
 [ext_resource path="res://scripts/play_anim.gd" type="Script" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://gfx/fonts/DejaVuSans.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://sound/shimmer_1.wav" type="AudioStream" id=14]
 [ext_resource path="res://sound/stonedb_womp.wav" type="AudioStream" id=15]
+[ext_resource path="res://gfx/models/characters/villainguy.glb" type="PackedScene" id=16]
+[ext_resource path="res://gfx/materials/purplefloor.tres" type="Material" id=17]
 
 [sub_resource type="PlaneMesh" id=5]
 material = ExtResource( 10 )
@@ -30,6 +32,10 @@ ambient_light_color = Color( 0.521569, 0.521569, 0.521569, 1 )
 fog_enabled = true
 fog_color = Color( 0.427451, 0.435294, 1, 1 )
 fog_depth_end = 50.0
+
+[sub_resource type="CubeMesh" id=15]
+material = ExtResource( 17 )
+size = Vector3( 48, 16, 16 )
 
 [sub_resource type="DynamicFont" id=9]
 size = 96
@@ -357,6 +363,15 @@ transform = Transform( 1, 0, 0, 0, 0.897466, 0.441083, 0, -0.441083, 0.897466, 0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="ViewportContainer/Viewport/World"]
 environment = SubResource( 7 )
 
+[node name="villainguy" parent="ViewportContainer/Viewport/World" instance=ExtResource( 16 )]
+transform = Transform( 0.325337, 0, -0.945598, 0, 1, 0, 0.945598, 0, 0.325337, 22.7947, -0.00832987, -16.873 )
+script = ExtResource( 2 )
+animation = "idle-loop"
+
+[node name="Wall" type="MeshInstance" parent="ViewportContainer/Viewport/World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.9451, 8, -32 )
+mesh = SubResource( 15 )
+
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
 margin_bottom = 146.0
@@ -386,23 +401,27 @@ text = "Get gud lol"
 align = 1
 valign = 1
 
-[node name="Stars" type="Node2D" parent="."]
+[node name="Stars" type="Control" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -195.0
 script = ExtResource( 2 )
 
 [node name="StarFull" type="Sprite" parent="Stars"]
 visible = false
-position = Vector2( 344, 472 )
+position = Vector2( 339, 65.1802 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 12 )
 
 [node name="StarEmpty" type="Sprite" parent="Stars"]
 visible = false
-position = Vector2( 516, 474 )
+position = Vector2( 511, 67.1802 )
 texture = ExtResource( 11 )
 
 [node name="StarEmpty2" type="Sprite" parent="Stars"]
 visible = false
-position = Vector2( 686, 472 )
+position = Vector2( 681, 65.1802 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 11 )
 
@@ -411,6 +430,6 @@ anims/RESET = SubResource( 13 )
 anims/default = SubResource( 12 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Stars"]
-stream = ExtResource( 15 )
+stream = ExtResource( 14 )
 
 [editable path="ViewportContainer/Viewport/World/bad_man_gibs"]

@@ -5,6 +5,7 @@ signal hurt(perpetrator)
 signal die(actor) #Played BEFORE the death animation
 signal dead() #Played AFTER the death animation
 signal shoot(shot, actor)
+signal heal()
 
 onready var anim:AnimationPlayer = get_node_or_null("Model/AnimationPlayer")
 onready var turn_control = get_node("/root/World/%TurnControl")
@@ -66,6 +67,14 @@ func hurt(damage:int, perpetrator:Spatial)->bool:
 		hit = true
 		emit_signal("hurt", perpetrator)
 		show_health_stat()
+		return true
+	return false
+	
+func heal(amount:int)->bool:
+	if health != max_health:
+		health = min(max_health, health + amount)
+		show_health_stat()
+		emit_signal("heal")
 		return true
 	return false
 	

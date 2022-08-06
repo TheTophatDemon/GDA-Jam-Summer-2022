@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/prefabs/turn_control.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/prefabs/healthbox.tscn" type="PackedScene" id=2]
 [ext_resource path="res://gfx/models/battlefields/computer_room.glb" type="PackedScene" id=3]
 [ext_resource path="res://scripts/regen_navmesh.gd" type="Script" id=4]
 [ext_resource path="res://scripts/battle_camera.gd" type="Script" id=5]
@@ -84,6 +85,12 @@ transform = Transform( 0.944891, 0.109538, -0.308518, 0.195044, 0.568523, 0.7992
 stream = ExtResource( 16 )
 autoplay = true
 bus = "Music"
+
+[node name="HealthBox" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3744, -1.90735e-06, -54.4627 )
+
+[node name="HealthBox2" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -71.1229, -1.90735e-06, -88.683 )
 
 [editable path="NavMesh/computer_room"]
 [editable path="TurnControl"]

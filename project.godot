@@ -1155,6 +1155,7 @@ pointing/emulate_touch_from_mouse=true
 3d_physics/layer_4="enemies"
 3d_physics/layer_5="props"
 3d_physics/layer_6="hazard"
+3d_physics/layer_7="item"
 
 [physics]
 

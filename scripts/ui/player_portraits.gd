@@ -15,10 +15,14 @@ func _ready():
 	for player in turn_control.get_node("Teams/" + Globals.NAME_PLAYER_TEAM).get_children():
 		err += player.connect("hurt", self, "_on_player_hurt", [player])
 		err += player.connect("die", self, "_on_player_die")
+		err += player.connect("heal", self, "_on_player_heal", [player])
 		call_deferred("update_portrait_health", player)
 	if err: printerr("!!! Signal error in player_portraits.gd")
 	
 func _on_player_hurt(_perp, actor:Actor):
+	update_portrait_health(actor)
+	
+func _on_player_heal(actor:Actor):
 	update_portrait_health(actor)
 	
 func _on_player_die(actor:Actor):

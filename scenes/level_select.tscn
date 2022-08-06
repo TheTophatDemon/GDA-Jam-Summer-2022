@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/ui/scenario_button.gd" type="Script" id=1]
 [ext_resource path="res://scenes/battle2.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://gfx/ui/ads/anime_melons.png" type="Texture" id=7]
 [ext_resource path="res://gfx/ui/ads/eggman_clickbait.png" type="Texture" id=8]
 [ext_resource path="res://gfx/ui/ads/fly_to_siberia.png" type="Texture" id=9]
+[ext_resource path="res://gfx/ui/ads/big_stinky_cars.png" type="Texture" id=10]
+[ext_resource path="res://scenes/battle3.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -86,6 +88,15 @@ text = "Scenario 2"
 script = ExtResource( 1 )
 destination = ExtResource( 2 )
 
+[node name="Scenario3" type="Button" parent="."]
+margin_left = 425.0
+margin_top = 214.0
+margin_right = 616.0
+margin_bottom = 249.0
+text = "Scenario 3"
+script = ExtResource( 1 )
+destination = ExtResource( 11 )
+
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_left = 237.0
 margin_top = 331.0
@@ -120,6 +131,12 @@ expand = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 9 )
+expand = true
+
+[node name="Cars" type="TextureRect" parent="ColorRect/Ads"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 10 )
 expand = true
 
 [node name="Label" type="Label" parent="ColorRect"]

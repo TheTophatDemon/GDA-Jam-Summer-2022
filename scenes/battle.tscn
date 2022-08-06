@@ -38,13 +38,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.0932, -0.0319207, 2.87223 )
 
 [node name="vg_lair_battle" parent="NavMesh" instance=ExtResource( 3 )]
 
-[node name="static_collision" parent="NavMesh/vg_lair_battle/room" index="0" groups=["terrain_objects"]]
-collision_layer = 3
-
-[node name="room2" parent="NavMesh/vg_lair_battle" index="1"]
-visible = false
-enabled = false
-
 [node name="TurnControl" parent="." instance=ExtResource( 1 )]
 
 [node name="Bad Man" parent="TurnControl/Teams/EnemyTeam" index="0" instance=ExtResource( 12 )]
