@@ -15,3 +15,5 @@ const NAME_ENEMY_TEAM = "EnemyTeam"
 
 func print_err(err:int):
 	print("!!! Function returned error: ", err)
+
+var stars_number:int = 1

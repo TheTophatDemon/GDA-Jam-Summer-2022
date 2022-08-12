@@ -205,7 +205,7 @@ depth = 3.44
 
 [sub_resource type="TextMesh" id=7]
 material = SubResource( 5 )
-text = "Crappy Ciller Contraptions"
+text = "Crappy Ckiller Contraptions"
 font = ExtResource( 10 )
 pixel_size = 0.02
 depth = 3.44

@@ -56,7 +56,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="cronikles-versus"
+config/name="The Cronikles: Curse of the Crappy Ckiller Contraptions Prototype"
 run/main_scene="res://scenes/title.tscn"
 config/icon="res://icon.png"
 

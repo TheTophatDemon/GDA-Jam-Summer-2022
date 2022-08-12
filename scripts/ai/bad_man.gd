@@ -76,6 +76,9 @@ func _on_animation_finish(anim_name:String):
 				emit_signal("dead")
 			elif action == Action.STUN:
 				action = Action.PURSUE
+		"shrug":
+			turn_control.skip_turn()
+			action = Action.STUN
 				
 func _on_start_turn(team, actor):
 	._on_start_turn(team, actor)
@@ -156,8 +159,6 @@ func _process(delta):
 				if anim.current_animation != "shrug":
 					anim.play("shrug")
 					$SoundConfused.play()
-					yield(anim, "animation_finished")
-					turn_control.skip_turn()
 				var vec_to_camera = (get_viewport().get_camera().global_transform.origin - global_transform.origin).normalized()
 				rotation_target = Vector3(vec_to_camera.x, 0.0, vec_to_camera.z)
 	elif not died:

@@ -41,6 +41,7 @@ func set_state(new_state:int):
 			#Check victory condition
 			if $Teams/EnemyTeam.get_child_count() == 0:
 				var _err = get_tree().change_scene("res://scenes/win.tscn")
+				Globals.stars_number = $Teams/PlayerTeam.get_child_count()
 			elif $Teams/PlayerTeam.get_child_count() == 0:
 				var _err = get_tree().change_scene("res://scenes/lose.tscn")
 			else:

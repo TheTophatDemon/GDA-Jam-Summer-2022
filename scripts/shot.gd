@@ -2,7 +2,7 @@ extends Area
 class_name Shot
 
 export var rotate_speed = 10.0
-export var move_speed = 20.0
+export var move_speed = 30.0
 
 var shooter:Node = null
 var dying = false

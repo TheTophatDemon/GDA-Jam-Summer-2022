@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://gfx/models/characters/bad_man.glb" type="PackedScene" id=1]
 [ext_resource path="res://scripts/play_anim.gd" type="Script" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://gfx/fonts/stencil.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://gfx/fonts/stencil_28.tres" type="DynamicFont" id=7]
 [ext_resource path="res://scripts/ui/end_screen.gd" type="Script" id=8]
+[ext_resource path="res://gfx/models/characters/villainguy.glb" type="PackedScene" id=9]
+[ext_resource path="res://gfx/models/characters/smirk.material" type="Material" id=10]
 
 [sub_resource type="Image" id=10]
 data = {
@@ -114,6 +116,14 @@ omni_range = 25.9037
 [node name="WorldEnvironment" type="WorldEnvironment" parent="ViewportContainer/Viewport/World"]
 environment = SubResource( 7 )
 
+[node name="villainguy" parent="ViewportContainer/Viewport/World" instance=ExtResource( 9 )]
+transform = Transform( 0.69424, 0.00235066, 0.71974, -0.00338593, 0.999994, 0, -0.719736, -0.00243699, 0.694244, -10.5494, -0.0594764, -6.42967 )
+script = ExtResource( 2 )
+animation = "idle-loop"
+
+[node name="villainguy" parent="ViewportContainer/Viewport/World/villainguy/villainguy_rig/Skeleton" index="0"]
+material/2 = ExtResource( 10 )
+
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
 margin_bottom = 146.0
@@ -132,3 +142,5 @@ custom_fonts/font = ExtResource( 7 )
 text = "KEEP TRY"
 align = 1
 valign = 1
+
+[editable path="ViewportContainer/Viewport/World/villainguy"]

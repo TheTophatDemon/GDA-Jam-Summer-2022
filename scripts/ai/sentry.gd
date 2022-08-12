@@ -4,6 +4,9 @@ class_name Sentry
 const EXPLOSION_PREFAB = preload("res://scenes/prefabs/effects/explosion_effect.tscn")
 const SHOT_PREFAB = preload("res://scenes/prefabs/attacks/lazer_shot.tscn")
 
+const PROXIMITY_THRESH:float = 9.0
+const ANGLE_THRESH:float = deg2rad(5.0)
+
 export(String, "EnemyTeam", "PlayerTeam") var target_team:String = Globals.NAME_ENEMY_TEAM
 export(float) var spin_speed:float = 4.0
 export(float) var spin_angle:float = 0.0 #The angle, in degrees, at which the sentry head spins in the other direction
@@ -77,14 +80,17 @@ func _process(delta):
 	if shooting:
 		#Turn to face target
 		head.rotation_target = (target.global_transform.origin - global_transform.origin).normalized()
-		if head.facing_direction == head.rotation_target and shoot_timer <= 0.0:
+		if head.facing_direction.angle_to(head.rotation_target) < ANGLE_THRESH and shoot_timer <= 0.0:
 			if shooter.get_collider() == target:
 				shoot()
 			shoot_timer = shoot_interval
 		else:
 			shoot_timer -= delta
 	else:
-		if active and actions_left > 0 and shooter.get_collider() == target:
+		shoot_timer = 0.0
+		var can_target = is_instance_valid(target) and (shooter.get_collider() == target) #or \
+			#(target.global_transform.origin - global_transform.origin).length() < PROXIMITY_THRESH)
+		if active and actions_left > 0 and can_target:
 			shooting = true
 		if is_zero_approx(spin_angle):
 			#Spin continously

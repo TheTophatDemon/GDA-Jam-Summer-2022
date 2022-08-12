@@ -1,3 +1,13 @@
+Sole developer is The Tophat Demon (tophatdemon.com)
+Using Godot 3.5 game engine
+
+===TEXTURES===
+
+Photorealistic textures are from the Classic 64 open asset library
+https://craigsnedeker.itch.io/classic64-asset-library
+
+===SOUNDS===
+
 sound/shimmer_1.flac by qubodup of opengameart.org under CC-BY 3.0
 sound/stonedb_womp.wav by StonedB of freesound.org under CC-BY 3.0
 sound/flamethrower.wav by AslakHostaker of freesound.org under CC0
